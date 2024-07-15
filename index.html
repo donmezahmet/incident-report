@@ -15,16 +15,23 @@
             <div class="form-group">
                 <label>Before Getting Started</label>
                 <div>
-                    <label for="agree">
-                        <input type="radio" id="agree" name="terms" value="agree">
-                        I have read and agree to the Terms and Conditions.
-                    </label>
+                    <input type="radio" id="agree" name="terms" value="agree">
+                    <label for="agree">I have read and agree to the Terms and Conditions.</label>
                 </div>
                 <div>
-                    <label for="disagree">
-                        <input type="radio" id="disagree" name="terms" value="disagree">
-                        I do not agree to the Terms and Conditions.
-                    </label>
+                    <input type="radio" id="disagree" name="terms" value="disagree">
+                    <label for="disagree">I do not agree to the Terms and Conditions.</label>
+                </div>
+            </div>
+
+            <div id="additionalQuestions" class="hidden">
+                <div class="form-group">
+                    <label for="issueDetails">Issue Details *</label>
+                    <input type="text" id="issueDetails" name="issueDetails" required>
+                </div>
+                <div class="form-group">
+                    <label for="involvedParties">Who was involved? *</label>
+                    <input type="text" id="involvedParties" name="involvedParties" required>
                 </div>
             </div>
             
