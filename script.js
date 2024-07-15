@@ -110,7 +110,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         };
 
         // Verileri Google Sheets'e gönder
-        fetch('YOUR_DEPLOYMENT_URL', {
+        fetch('https://script.google.com/macros/s/AKfycbyIAnDnOFCbwAemviPca_2xphAzDEAoNZiChWv2fs2nvH8y8wB1pC3dIIfwp0mGhBWw/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
