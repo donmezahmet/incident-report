@@ -8,38 +8,108 @@
 </head>
 <body>
     <div class="container">
-        <h1>Report an Incident</h1>
-        <p>You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
-        
+        <div class="language-selector">
+            <label for="language" data-lang="selectLanguage">Select Language</label>
+            <select id="language" name="language">
+                <option value="en">English</option>
+                <option value="tr">Türkçe</option>
+            </select>
+        </div>
+        <h1 data-lang="title">Report an Incident</h1>
+        <p data-lang="intro">You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank" data-lang="privacy">Getir Speak Up Privacy Notice</a>.</p>
+
         <form id="incidentForm">
             <div class="form-group">
-                <label>Before Getting Started</label>
+                <label data-lang="terms">Before Getting Started</label>
                 <div>
                     <input type="radio" id="agree" name="terms" value="agree">
-                    <label for="agree">I have read and agree to the Terms and Conditions.</label>
+                    <label for="agree" data-lang="agree">I have read and agree to the Terms and Conditions.</label>
                 </div>
                 <div>
                     <input type="radio" id="disagree" name="terms" value="disagree">
-                    <label for="disagree">I do not agree to the Terms and Conditions.</label>
+                    <label for="disagree" data-lang="disagree">I do not agree to the Terms and Conditions.</label>
                 </div>
             </div>
 
             <div id="additionalQuestions" class="hidden">
                 <div class="form-group">
-                    <label for="issueDetails">Issue Details *</label>
+                    <label for="issueDetails" data-lang="issueDetails">Issue Details *</label>
                     <input type="text" id="issueDetails" name="issueDetails" required>
                 </div>
                 <div class="form-group">
-                    <label for="involvedParties">Who was involved? *</label>
+                    <label for="involvedParties" data-lang="involvedParties">Who was involved? *</label>
                     <input type="text" id="involvedParties" name="involvedParties" required>
+                </div>
+                <div class="form-group">
+                    <label for="issueLocation" data-lang="issueLocation">Please indicate where the issue occurred *</label>
+                    <select id="issueLocation" name="issueLocation" required>
+                        <option value="" disabled selected>Choose</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Spain">Spain</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="US">US</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" id="otherLocation" name="otherLocation" class="hidden" placeholder="Please specify">
+                </div>
+                <div class="form-group">
+                    <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date) *</label>
+                    <input type="date" id="issueDate" name="issueDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time) *</label>
+                    <input type="time" id="issueTime" name="issueTime" required>
+                </div>
+                <div class="form-group">
+                    <label data-lang="introduce">Would you like to introduce yourself?</label>
+                    <div>
+                        <input type="radio" id="introduceYes" name="introduce" value="yes">
+                        <label for="introduceYes" data-lang="introduceYes">Yes</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="introduceNo" name="introduce" value="no">
+                        <label for="introduceNo" data-lang="introduceNo">No</label>
+                    </div>
+                </div>
+                <div id="personalInfo" class="hidden">
+                    <div class="form-group">
+                        <label for="fullName" data-lang="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-lang="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gsm" data-lang="gsm">GSM</label>
+                        <input type="tel" id="gsm" name="gsm">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-lang="relationship">Your relationship with the company *</label>
+                    <div>
+                        <input type="radio" id="currentEmployee" name="relationship" value="current">
+                        <label for="currentEmployee" data-lang="currentEmployee">Current Employee</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="formerEmployee" name="relationship" value="former">
+                        <label for="formerEmployee" data-lang="formerEmployee">Former Employee</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="nonEmployee" name="relationship" value="non">
+                        <label for="nonEmployee" data-lang="nonEmployee">Not an Employee</label>
+                    </div>
                 </div>
             </div>
             
-            <button type="submit">Next</button>
+            <button type="submit" data-lang="submit">Next</button>
         </form>
         
         <div id="warning" class="hidden">
-            <p>You cannot proceed without agreeing to the Terms and Conditions.</p>
+            <p data-lang="warning">You cannot proceed without agreeing to the Terms and Conditions.</p>
         </div>
     </div>
 

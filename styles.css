@@ -12,6 +12,23 @@ body {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.language-selector label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.language-selector select {
+    padding: 5px;
+    font-size: 14px;
 }
 
 h1 {
@@ -41,7 +58,12 @@ input[type="radio"] {
     margin-right: 5px;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px;
