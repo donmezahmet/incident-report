@@ -91,3 +91,10 @@ button:hover {
     color: red;
     margin-top: 20px;
 }
+
+#loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
