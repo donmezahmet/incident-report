@@ -16,7 +16,7 @@
             </select>
         </div>
         <h1 data-lang="title">Report an Incident</h1>
-        <p id="introText" data-lang="intro">You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank" data-lang="privacy">Getir Speak Up Privacy Notice</a>.</p>
+        <p id="introText" data-lang="intro">You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
 
         <form id="incidentForm">
             <div class="form-group">
@@ -34,7 +34,7 @@
             <div id="additionalQuestions" class="hidden">
                 <div class="form-group">
                     <label for="issueDetails" data-lang="issueDetails">Issue Details *</label>
-                    <input type="text" id="issueDetails" name="issueDetails" required>
+                    <textarea id="issueDetails" name="issueDetails" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="involvedParties" data-lang="involvedParties">Who was involved? *</label>
@@ -105,20 +105,22 @@
                 </div>
             </div>
             
-            <button type="submit" id="submitBtn" data-lang="submit">Submit</button>
+            <button type="submit" data-lang="submit" id="submitBtn">Submit</button>
         </form>
         
         <div id="warning" class="hidden">
             <p data-lang="warning">You cannot proceed without agreeing to the Terms and Conditions.</p>
         </div>
+        
+        <div id="loading" class="hidden">
+            <img src="loading.gif" alt="Loading...">
+        </div>
 
-        <div id="successMessage" class="hidden">
-            <p data-lang="successMessage">Your report has been successfully submitted. Thank you!</p>
+        <div id="successMessage" class="hidden" data-lang="successMessage">
+            Your report has been successfully submitted. Thank you!
         </div>
     </div>
-    <div id="loading" class="hidden">
-        <img src="loading.gif" alt="Loading">
-    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

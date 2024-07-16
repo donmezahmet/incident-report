@@ -63,7 +63,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             document.querySelector('.container').style.opacity = '1';
             if (data.status === 'success') {
                 document.getElementById('incidentForm').classList.add('hidden');
-                document.getElementById('introText').classList.add('hidden');
+                document.getElementById('introText').classList.add('hidden'); // Intro metnini gizle
                 document.getElementById('successMessage').classList.remove('hidden');
             } else {
                 alert('Form gönderilirken bir hata oluştu: ' + data.message);
@@ -113,7 +113,7 @@ document.getElementById('introduceNo').addEventListener('change', function() {
 document.getElementById('language').addEventListener('change', function() {
     const lang = this.value;
     document.querySelectorAll('[data-lang]').forEach(el => {
-        el.textContent = translations[lang][el.getAttribute('data-lang')];
+        el.innerHTML = translations[lang][el.getAttribute('data-lang')];
     });
 });
 
@@ -121,7 +121,7 @@ const translations = {
     en: {
         selectLanguage: "Select Language",
         title: "Report an Incident",
-        intro: "You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the Getir Speak Up Privacy Notice.",
+        intro: "You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id='privacy-link' href='https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view' target='_blank'>Getir Speak Up Privacy Notice</a>.",
         terms: "Before Getting Started",
         agree: "I have read and agree to the Terms and Conditions.",
         disagree: "I do not agree to the Terms and Conditions.",
@@ -147,7 +147,7 @@ const translations = {
     tr: {
         selectLanguage: "Dil Seçiniz",
         title: "Bir Olay Bildirin",
-        intro: "Sorularınızı gönderebilir veya Getir'e Getir Speak Up üzerinden olayları bildirebilirsiniz. Anonim kalmayı tercih ettiğinizde, Getir kimliğinizi belirleyemez ve yalnızca Getir Speak Up üzerinden sizinle iletişim kurabilir. Kimliğinizi Getir'e sağlamayı tercih ederseniz, sorularınızda veya olay raporlarınızda yer alan kişisel verileriniz Getir tarafından işlenecektir. Kişisel verilerinizin işlenmesiyle ilgili daha fazla bilgi için lütfen Getir Speak Up Gizlilik Bildirimini okuyun.",
+        intro: "Sorularınızı gönderebilir veya Getir'e Getir Speak Up üzerinden olayları bildirebilirsiniz. Anonim kalmayı tercih ettiğinizde, Getir kimliğinizi belirleyemez ve yalnızca Getir Speak Up üzerinden sizinle iletişim kurabilir. Kimliğinizi Getir'e sağlamayı tercih ederseniz, sorularınızda veya olay raporlarınızda yer alan kişisel verileriniz Getir tarafından işlenecektir. Kişisel verilerinizin işlenmesiyle ilgili daha fazla bilgi için lütfen <a id='privacy-link' href='https://drive.google.com/file/d/1LQMqTUgPGWIbVrZmATwP8jGtF_2V5CTR/view' target='_blank'>Getir Speak Up Gizlilik Bildirimini</a> okuyun.",
         terms: "Başlamadan Önce",
         agree: "Şartlar ve Koşulları okudum ve kabul ediyorum.",
         disagree: "Şartlar ve Koşulları kabul etmiyorum.",

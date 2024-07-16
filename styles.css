@@ -63,11 +63,18 @@ input[type="email"],
 input[type="tel"],
 input[type="date"],
 input[type="time"],
-select {
+select,
+textarea {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+}
+
+#issueDetails {
+    width: 100%;
+    height: 200px; /* Boyutunu istediğiniz şekilde ayarlayabilirsiniz */
+    resize: none; /* Kullanıcının boyutunu değiştirememesi için */
 }
 
 button {
