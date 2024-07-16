@@ -33,6 +33,9 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
 
         const relationship = document.querySelector('input[name="relationship"]:checked').value;
 
+        // Unique ticket number oluştur
+        const ticketNumber = 'TICKET-' + Date.now();
+
         // Verileri bir nesnede topla
         const formData = new FormData();
         formData.append('issueDetails', issueDetails);
@@ -45,6 +48,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         formData.append('email', email);
         formData.append('gsm', gsm);
         formData.append('relationship', relationship);
+        formData.append('ticketNumber', ticketNumber);
 
         const attachment = document.getElementById('attachment').files[0];
         if (attachment) {
@@ -52,11 +56,11 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             reader.onloadend = function() {
                 const base64data = reader.result.split(',')[1];
                 formData.append('attachment', base64data);
-                formData.append('attachmentName', attachment.name);
+                formData.append('attachmentName', `TICKET-${ticketNumber}_${attachment.name}`);
                 formData.append('attachmentType', attachment.type);
 
                 // Dosya yükleme işlemi
-                fetch('https://script.google.com/macros/s/AKfycbxOfqC5D5X2l2SIfzcVwjpov6cz7H4Frdg-cMLy3cCtRhoJvz4Pcmwne8FfT_iqfO5O8A/exec?', {
+                fetch('https://script.google.com/macros/s/AKfycbycTedLyfNKg6uFkPGWi5_4DyYwoE3DaSu634NSXQUK2dR-2tUJy9at1g-QGtzACEpT5Q/exec?', {
                     method: 'POST',
                     body: formData
                 })
@@ -72,7 +76,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         }
 
         // Verileri Google Sheets'e gönder
-        fetch('https://script.google.com/macros/s/AKfycbwqa8IJDSML8_W4DClaXR7NYzOnK-TVVWvlRa8rs4GaWVCqhb3D982EL93l9gc4bQkF/exec?' + new URLSearchParams(formData), {
+        fetch('https://script.google.com/macros/s/AKfycbzAi4aOvCNaEbkbVV4WEQ-e2gLgvCpge2mL-2K6amnaV7CqeVW9uPDIPloPflqgxPdP/exec?' + new URLSearchParams(formData), {
             method: 'GET'
         })
         .then(response => response.json())
