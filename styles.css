@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin-top: 50px;
     padding: 20px;
     background-color: white;
@@ -118,8 +118,8 @@ button:hover {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 300px; /* Genişliği artırdım */
-    width: 300px; /* Genişliği artırdım */
+    max-width: 250px; /* Genişliği artırdım */
+    width: 250px; /* Genişliği artırdım */
 }
 
 .faq {
