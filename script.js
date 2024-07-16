@@ -33,7 +33,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
 
         const relationship = document.querySelector('input[name="relationship"]:checked').value;
 
-        // Unique ticket number oluştur
+          // Unique ticket number oluştur
         const ticketNumber = 'TICKET-' + Date.now();
 
         // Verileri bir nesnede topla
@@ -56,7 +56,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             reader.onloadend = function() {
                 const base64data = reader.result.split(',')[1];
                 formData.append('attachment', base64data);
-                formData.append('attachmentName', `TICKET-${ticketNumber}_${attachment.name}`);
+                formData.append('attachmentName', attachment.name);
                 formData.append('attachmentType', attachment.type);
 
                 // Dosya yükleme işlemi
@@ -88,6 +88,8 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                 document.getElementById('incidentForm').classList.add('hidden');
                 document.getElementById('introText').classList.add('hidden'); // Intro metnini gizle
                 document.getElementById('successMessage').classList.remove('hidden');
+                document.querySelector('.language-selector').classList.add('hidden'); // Dil seçimini gizle
+                document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
             } else {
                 alert('Form gönderilirken bir hata oluştu: ' + data.message);
             }
@@ -138,6 +140,15 @@ document.getElementById('language').addEventListener('change', function() {
     document.querySelectorAll('[data-lang]').forEach(el => {
         el.innerHTML = translations[lang][el.getAttribute('data-lang')];
     });
+    document.querySelector('h1').textContent = translations[lang].title;
+    document.getElementById('successMessage').textContent = translations[lang].successMessage;
+    document.getElementById('faqTitle').textContent = translations[lang].faqTitle; // FAQ başlığını güncelle
+     document.getElementById('q1').textContent = translations[lang].q1;
+    document.getElementById('a1').textContent = translations[lang].a1;
+    document.getElementById('q2').textContent = translations[lang].q2;
+    document.getElementById('a2').textContent = translations[lang].a2;
+    document.getElementById('q3').textContent = translations[lang].q3;
+    document.getElementById('a3').textContent = translations[lang].a3;
 });
 
 const translations = {
@@ -165,7 +176,15 @@ const translations = {
         nonEmployee: "Not an Employee",
         submit: "Submit",
         warning: "You cannot proceed without agreeing to the Terms and Conditions.",
-        successMessage: "Your report has been successfully submitted. Thank you!"
+        successTitle: "Thank you for your submission!",
+        successMessage: "Your report has been successfully submitted. Thank you!",
+         faqTitle: "FAQ",
+        q1: "Q1",
+        a1: "Answer 1",
+        q2: "Q2",
+        a2: "Answer 2",
+        q3: "Q3",
+        a3: "Answer 3"
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -191,6 +210,14 @@ const translations = {
         nonEmployee: "Çalışan Değil",
         submit: "Gönder",
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
-        successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!"
+        successTitle: "Başvurunuz İçin Teşekkürler!",
+        successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
+        faqTitle: "SSS",
+        q1: "Soru 1",
+        a1: "Cevap 1",
+        q2: "Soru 2",
+        a2: "Cevap 2",
+        q3: "Soru 3",
+        a3: "Cevap 3"
     }
 };

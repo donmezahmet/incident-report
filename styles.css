@@ -3,11 +3,15 @@ body {
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
 }
 
 .container {
-    max-width: 600px;
-    margin: 50px auto;
+    max-width: 800px;
+    margin-top: 50px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -17,8 +21,9 @@ body {
 
 .language-selector {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px; /* Bu kısmı düzenleyebilirsiniz */
+    right: 10px;
+
 }
 
 .language-selector label {
@@ -104,4 +109,51 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.faq-container {
+    margin-top: 50px;
+    margin-left: 30px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px; /* Genişliği artırdım */
+    width: 300px; /* Genişliği artırdım */
+}
+
+.faq {
+    width: 100%;
+}
+
+.faq-question {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.faq-answer {
+    display: none;
+    background-color: #e9ecef;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.faq-question:focus + .faq-answer {
+    display: block;
+}
+
+.faq-question:focus {
+    outline: none;
+}
+
+.hidden {
+    display: none;
 }
