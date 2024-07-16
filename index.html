@@ -18,7 +18,7 @@
         <h1 data-lang="title">Report an Incident</h1>
         <p id="introText" data-lang="intro">You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
 
-        <form id="incidentForm">
+        <form id="incidentForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label data-lang="terms">Before Getting Started</label>
                 <div>
@@ -62,6 +62,10 @@
                 <div class="form-group">
                     <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time) *</label>
                     <input type="time" id="issueTime" name="issueTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="attachment" data-lang="attachment">Attachment</label>
+                    <input type="file" id="attachment" name="attachment">
                 </div>
                 <div class="form-group">
                     <label data-lang="introduce">Would you like to introduce yourself?</label>

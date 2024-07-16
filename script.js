@@ -34,26 +34,45 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         const relationship = document.querySelector('input[name="relationship"]:checked').value;
 
         // Verileri bir nesnede topla
-        const formData = {
-            issueDetails: issueDetails,
-            involvedParties: involvedParties,
-            location: location,
-            issueDate: issueDate,
-            issueTime: issueTime,
-            introduce: introduce,
-            fullName: fullName,
-            email: email,
-            gsm: gsm,
-            relationship: relationship
-        };
+        const formData = new FormData();
+        formData.append('issueDetails', issueDetails);
+        formData.append('involvedParties', involvedParties);
+        formData.append('location', location);
+        formData.append('issueDate', issueDate);
+        formData.append('issueTime', issueTime);
+        formData.append('introduce', introduce);
+        formData.append('fullName', fullName);
+        formData.append('email', email);
+        formData.append('gsm', gsm);
+        formData.append('relationship', relationship);
 
-        console.log("Form data:", formData);
+        const attachment = document.getElementById('attachment').files[0];
+        if (attachment) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const base64data = reader.result.split(',')[1];
+                formData.append('attachment', base64data);
+                formData.append('attachmentName', attachment.name);
+                formData.append('attachmentType', attachment.type);
 
-        // URL parametrelerini oluştur
-        const queryString = new URLSearchParams(formData).toString();
+                // Dosya yükleme işlemi
+                fetch('https://script.google.com/macros/s/AKfycbxOfqC5D5X2l2SIfzcVwjpov6cz7H4Frdg-cMLy3cCtRhoJvz4Pcmwne8FfT_iqfO5O8A/exec?', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("File upload response:", data);
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                });
+            }
+            reader.readAsDataURL(attachment);
+        }
 
         // Verileri Google Sheets'e gönder
-        fetch('https://script.google.com/macros/s/AKfycbwqa8IJDSML8_W4DClaXR7NYzOnK-TVVWvlRa8rs4GaWVCqhb3D982EL93l9gc4bQkF/exec?' + queryString, {
+        fetch('https://script.google.com/macros/s/AKfycbwqa8IJDSML8_W4DClaXR7NYzOnK-TVVWvlRa8rs4GaWVCqhb3D982EL93l9gc4bQkF/exec?' + new URLSearchParams(formData), {
             method: 'GET'
         })
         .then(response => response.json())
