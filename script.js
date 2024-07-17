@@ -143,7 +143,7 @@ document.getElementById('language').addEventListener('change', function() {
     document.querySelector('h1').textContent = translations[lang].title;
     document.getElementById('successMessage').textContent = translations[lang].successMessage;
     document.getElementById('faqTitle').textContent = translations[lang].faqTitle; // FAQ başlığını güncelle
-     document.getElementById('q1').textContent = translations[lang].q1;
+    document.getElementById('q1').textContent = translations[lang].q1;
     document.getElementById('a1').textContent = translations[lang].a1;
     document.getElementById('q2').textContent = translations[lang].q2;
     document.getElementById('a2').textContent = translations[lang].a2;
@@ -178,7 +178,7 @@ const translations = {
         warning: "You cannot proceed without agreeing to the Terms and Conditions.",
         successTitle: "Thank you for your submission!",
         successMessage: "Your report has been successfully submitted. Thank you!",
-         faqTitle: "FAQ",
+        faqTitle: "FAQ",
         q1: "Q1",
         a1: "Answer 1",
         q2: "Q2",
@@ -221,3 +221,18 @@ const translations = {
         a3: "Cevap 3"
     }
 };
+
+// FAQ sorularını ve cevaplarını göstermek için event listener
+document.querySelectorAll('.faq-question').forEach((button) => {
+    button.addEventListener('click', function() {
+        const answer = this.nextElementSibling;
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            document.querySelectorAll('.faq-answer').forEach((ans) => {
+                ans.style.display = 'none';
+            });
+            answer.style.display = 'block';
+        }
+    });
+});
