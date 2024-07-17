@@ -160,6 +160,26 @@ document.getElementById('language').addEventListener('change', function() {
 
 });
 
+// FAQ toggle işlemi
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', function() {
+        const answer = this.nextElementSibling;
+        const allAnswers = document.querySelectorAll('.faq-answer');
+
+        allAnswers.forEach(ans => {
+            if (ans !== answer) {
+                ans.style.display = 'none';
+            }
+        });
+
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+        } else {
+            answer.style.display = 'block';
+        }
+    });
+});
+
 const translations = {
     en: {
         selectLanguage: "Select Language",
