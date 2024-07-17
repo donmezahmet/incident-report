@@ -89,6 +89,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                 document.getElementById('introText').classList.add('hidden'); // Intro metnini gizle
                 document.getElementById('successMessage').classList.remove('hidden');
                 document.querySelector('.language-selector').classList.add('hidden'); // Dil seçimini gizle
+                document.querySelector('.faq-container').classList.add('hidden'); // faq gizle
                 document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
             } else {
                 alert('Form gönderilirken bir hata oluştu: ' + data.message);
@@ -142,13 +143,21 @@ document.getElementById('language').addEventListener('change', function() {
     });
     document.querySelector('h1').textContent = translations[lang].title;
     document.getElementById('successMessage').textContent = translations[lang].successMessage;
-    document.getElementById('faqTitle').textContent = translations[lang].faqTitle; // FAQ başlığını güncelle
+    document.getElementById('faqTitle').textContent = translations[lang].faqTitle
     document.getElementById('q1').textContent = translations[lang].q1;
     document.getElementById('a1').textContent = translations[lang].a1;
     document.getElementById('q2').textContent = translations[lang].q2;
     document.getElementById('a2').textContent = translations[lang].a2;
     document.getElementById('q3').textContent = translations[lang].q3;
     document.getElementById('a3').textContent = translations[lang].a3;
+     document.getElementById('q4').textContent = translations[lang].q4;
+    document.getElementById('a4').textContent = translations[lang].a4;
+
+    // Placeholderları güncelle
+    document.getElementById('issueDetails').placeholder = translations[lang].issueDetailsPlaceholder;
+    document.getElementById('involvedParties').placeholder = translations[lang].involvedPartiesPlaceholder;
+
+
 });
 
 const translations = {
@@ -179,12 +188,16 @@ const translations = {
         successTitle: "Thank you for your submission!",
         successMessage: "Your report has been successfully submitted. Thank you!",
         faqTitle: "FAQ",
-        q1: "Q1",
-        a1: "Answer 1",
-        q2: "Q2",
-        a2: "Answer 2",
-        q3: "Q3",
-        a3: "Answer 3"
+        q1: "What is Getir Speak Up?",
+        a1: "It is a 24/7 support line where Getir employees can share 'ethical misconduct' they have observed or experienced and express their concerns. Reports received are directed to the Getir Ethics and Compliance Executive on the same day, and an investigation is initiated as soon as possible.",
+        q2: "Which issues are regarded as ethical claims?",
+        a2: "Employees can notify any issue contradicting Getir’s culture, ethical values, professional standards and applicable law. In this context, it is possible to report various issues such as data leak, bribery and corruption, conflicts of interest, confidential information breaches, inappropriate expense reporting, misuse of company resources for personal gain, discrimination, mobbing, anti-competitive behaviors, and violations of the company's ethical culture.",
+        q3: "Do I have to reveal my identity while reporting?",
+        a3: "You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Ethics and Compliance Executive will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals. ",
+        q4: "Will there be any negative consequences for me after I report an issue?",
+        a4: "Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable. ",
+        issueDetailsPlaceholder: "Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know.",
+        involvedPartiesPlaceholder: "Please specify the identity of the person(s) engaged in this behavior."
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -212,27 +225,16 @@ const translations = {
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
         successTitle: "Başvurunuz İçin Teşekkürler!",
         successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
-        faqTitle: "SSS",
-        q1: "Soru 1",
-        a1: "Cevap 1",
-        q2: "Soru 2",
-        a2: "Cevap 2",
-        q3: "Soru 3",
-        a3: "Cevap 3"
+        faqTitle: "Sıkça Sorulan Sorular",
+        q1: "Getir Speak Up nedir?",
+        a1: "Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir Etik ve Uyum Yöneticisine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.",
+        q2: "Hangi konularda etik bildirimde bulunulur?",
+        a2: "Getir kültürüne, Getir etik değerlerine, profesyonel standartlara ve ilgili yasalara aykırı olduğunu düşündüğünüz her durumu bildirebilirsiniz. Bu kapsamda veri sızıntısı, rüşvet ve yolsuzluk, çıkar çatışması, gizli bilgi ihlali, uygunsuz gider bildirimi, kurum kaynaklarını kişisel çıkarlar için kullanma, ayrımcılık, mobbing, rekabete aykırı davranışlar, şirket etik kültürüne aykırılık gibi birçok başlıkta bildirimde bulunulması mümkündür.",
+        q3: "Bildirimde bulunurken ismimi açıklamak zorunda mıyım?",
+        a3: "Getir Speak Up'a bir bildirimde bulunduğunuz zaman, iletişimi kolaylaştırması açısından kimliğinizi açıklamayı ya da kimliğinizi saklı tutmayı tercih edebilirsiniz. Kimliğinizi açıklamanız halinde incelemeyi yapacak olan Getir Etik ve Uyum Yöneticisi kimliğinizi saklı tutmak için her türlü önlemi alacaktır. Bildiriminizin değerlendirilmeye alınması bakımından kimliğinizi açıklayıp açıklamamanızın sürecin işleyişine herhangi bir olumsuz etkisi bulunmayacaktır. Bildirimde bulunan kişinin rızası olmaksızın, hiçbir şekilde kimlik bilgileri ya da kimliğini ortaya çıkarabilecek herhangi bir bilgi Getir veya 3. şahıslar ile paylaşılmaz.",
+        q4: "Bildirimde bulunduğum için bir zarar görür müyüm?",
+        a4: "Getir, bir sorunun ortaya çıkarılması için katkıda bulunan Getirlilerin yardımına değer verir. Dürüst ve iyi niyetli bir şekilde bildirimde çalışanlara herhangi bir misilleme (ayrımcılık, hak kaybı, tehdit vb. eylemler) yapılamaz. Ancak bilerek yanlış/asılsız bir suçlamada bulunanlar sorumlu tutulacaktır.",
+        issueDetailsPlaceholder: "İddiaya konu olan ihlal ile ilgili tüm ayrıntıları sağlayın, olayın gerçekleştiği yerler, olayın tanıkları, durumun değerlendirmesi ve sorunun değerlendirilmesi ve düzeltilmesi için yararlı olabilecek diğer bilgiler dahil. Zamanınızı ayırın ve mümkün olduğunca fazla ayrıntı sağlayın; ancak, adınızı açıklamak istemiyorsanız, kimliğinizi açığa çıkarabilecek ayrıntıları eklememeye dikkat edin. Bu durumdan haberdar olan tek kişi sizseniz, bunu bilmemiz gerekebilir.",
+        involvedPartiesPlaceholder: "Bu davranışta bulunan kişi(ler)in kimliğini belirtin."
     }
 };
-
-// FAQ sorularını ve cevaplarını göstermek için event listener
-document.querySelectorAll('.faq-question').forEach((button) => {
-    button.addEventListener('click', function() {
-        const answer = this.nextElementSibling;
-        if (answer.style.display === 'block') {
-            answer.style.display = 'none';
-        } else {
-            document.querySelectorAll('.faq-answer').forEach((ans) => {
-                ans.style.display = 'none';
-            });
-            answer.style.display = 'block';
-        }
-    });
-});
