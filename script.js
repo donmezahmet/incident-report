@@ -31,9 +31,9 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         const email = document.getElementById('email').value || '';
         const gsm = document.getElementById('gsm').value || '';
 
-        const relationship = document.querySelector('input[name="relationship"]:checked').value;
+        const relationship = document.getElementById('relationship').value;
 
-          // Unique ticket number oluştur
+        // Unique ticket number oluştur
         const ticketNumber = 'TICKET-' + Date.now();
 
         // Verileri bir nesnede topla
@@ -91,7 +91,31 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                 document.querySelector('.language-selector').classList.add('hidden'); // Dil seçimini gizle
                 document.querySelector('.faq-container').classList.add('hidden'); // faq gizle
                 document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
-            } else {
+        
+const language = document.getElementById('language').value;
+if (language === 'tr') {
+    const homeButton = document.createElement('button');
+    homeButton.id = 'homeButton';
+    homeButton.textContent = 'Ana Sayfaya Git';
+    homeButton.onclick = function() {
+        window.location.href = 'index.html';
+    };
+
+    // Yeni satır elemanları oluşturun
+    const newLine1 = document.createElement('br');
+    const newLine2 = document.createElement('br');
+    
+    // SuccessMessage'e yeni satır elemanlarını ekleyin
+    document.getElementById('successMessage').appendChild(newLine1);
+    document.getElementById('successMessage').appendChild(newLine2);
+    document.getElementById('successMessage').appendChild(homeButton);
+}
+
+
+            } 
+
+
+            else {
                 alert('Form gönderilirken bir hata oluştu: ' + data.message);
             }
         })
@@ -143,21 +167,37 @@ document.getElementById('language').addEventListener('change', function() {
     });
     document.querySelector('h1').textContent = translations[lang].title;
     document.getElementById('successMessage').textContent = translations[lang].successMessage;
-    document.getElementById('faqTitle').textContent = translations[lang].faqTitle
+    document.getElementById('faqTitle').textContent = translations[lang].faqTitle;
     document.getElementById('q1').textContent = translations[lang].q1;
     document.getElementById('a1').textContent = translations[lang].a1;
     document.getElementById('q2').textContent = translations[lang].q2;
     document.getElementById('a2').textContent = translations[lang].a2;
     document.getElementById('q3').textContent = translations[lang].q3;
     document.getElementById('a3').textContent = translations[lang].a3;
-     document.getElementById('q4').textContent = translations[lang].q4;
+    document.getElementById('q4').textContent = translations[lang].q4;
     document.getElementById('a4').textContent = translations[lang].a4;
 
-    // Placeholderları güncelle
+ // Placeholderları güncelle
     document.getElementById('issueDetails').placeholder = translations[lang].issueDetailsPlaceholder;
     document.getElementById('involvedParties').placeholder = translations[lang].involvedPartiesPlaceholder;
+    document.getElementById('otherLocation').placeholder = translations[lang].otherPlaceholder;
+    const relationshipSelect = document.getElementById('relationship');
+    relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].noDeclaration;
+    relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].other;
+    // Attachment metnini güncelle
+    document.querySelector('[data-lang="attachment"]').innerHTML = translations[lang].attachment;
+    // Other placeholder metnini güncelle
+    document.getElementById('otherrelationtext').placeholder = translations[lang].otherPlaceholder;
+});
 
-
+// Relationship dropdown değiştiğinde diğer seçeneği göster
+document.getElementById('relationship').addEventListener('change', function() {
+    const otherRelationshipField = document.getElementById('otherrelationtext');
+    if (this.value === 'otherrelation') {
+        otherRelationshipField.classList.remove('hidden');
+    } else {
+        otherRelationshipField.classList.add('hidden');
+    }
 });
 
 // FAQ toggle işlemi
@@ -180,6 +220,29 @@ document.querySelectorAll('.faq-question').forEach(question => {
     });
 });
 
+// Relationship select rengini ayarla
+document.getElementById('relationship').addEventListener('change', function() {
+    if (this.value === "") {
+        this.style.color = 'gray';
+    } else {
+        this.style.color = 'black';
+    }
+});
+
+// Sayfa yüklendiğinde "Select" metninin rengini gri yap
+window.addEventListener('DOMContentLoaded', (event) => {
+    const selectElement = document.getElementById('relationship');
+    if (selectElement.value === "") {
+        selectElement.style.color = 'gray';
+    }
+});
+
+// Add event listener for home button
+document.getElementById('homeButton').addEventListener('click', function() {
+    window.location.href = 'index.html'; // Replace 'index.html' with your main page URL if it's different
+});
+
+
 const translations = {
     en: {
         selectLanguage: "Select Language",
@@ -188,18 +251,18 @@ const translations = {
         terms: "Before Getting Started",
         agree: "I have read and agree to the Terms and Conditions.",
         disagree: "I do not agree to the Terms and Conditions.",
-        issueDetails: "Issue Details *",
-        involvedParties: "Who was involved? *",
-        issueLocation: "Please indicate where the issue occurred *",
-        issueDate: "Please indicate when the issue occurred (Date) *",
-        issueTime: "Please indicate when the issue occurred (Time) *",
+        issueDetails: "Issue Details",
+        involvedParties: "Who was involved?*",
+        issueLocation: "Please indicate where the issue occurred*",
+        issueDate: "Please indicate when the issue occurred (Date)",
+        issueTime: "Please indicate when the issue occurred (Time)",
         introduce: "Would you like to introduce yourself?",
         introduceYes: "Yes",
         introduceNo: "No",
         fullName: "Full Name",
         email: "Email *",
         gsm: "GSM",
-        relationship: "Your relationship with the company *",
+        relationship: "Your relationship with the company",
         currentEmployee: "Current Employee",
         formerEmployee: "Former Employee",
         nonEmployee: "Not an Employee",
@@ -217,7 +280,25 @@ const translations = {
         q4: "Will there be any negative consequences for me after I report an issue?",
         a4: "Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable. ",
         issueDetailsPlaceholder: "Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know.",
-        involvedPartiesPlaceholder: "Please specify the identity of the person(s) engaged in this behavior."
+        involvedPartiesPlaceholder: "Please specify the identity of the person(s) engaged in this behavior.",
+        supplier: "Supplier",
+        franchisee: "Franchisee",
+        contractor: "Contractor",
+        subcontractor: "Subcontractor",
+        noDeclaration: "I don't want to declare",
+         goToHomePage: "Go to Home Page",
+        Turkey: "Turkey",
+    Netherlands: "Netherlands",
+    Germany: "Germany",
+    France: "France",
+    Spain: "Spain",
+    UK: "United Kingdom",
+    US: "US",
+    other: "Other",
+        choose: "Choose",
+         otherPlaceholder: "Please specify",
+        attachment: "Please attach any supporting evidence documents (screenshots, etc.) that support your claims, if available."
+
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -226,24 +307,24 @@ const translations = {
         terms: "Başlamadan Önce",
         agree: "Şartlar ve Koşulları okudum ve kabul ediyorum.",
         disagree: "Şartlar ve Koşulları kabul etmiyorum.",
-        issueDetails: "Olay Detayları *",
-        involvedParties: "Kimler Dahil Oldu? *",
-        issueLocation: "Lütfen olayın nerede gerçekleştiğini belirtin *",
-        issueDate: "Lütfen olayın gerçekleştiği tarihi belirtin (Tarih) *",
-        issueTime: "Lütfen olayın gerçekleştiği zamanı belirtin (Zaman) *",
+        issueDetails: "Olay Detayları*",
+        involvedParties: "Kimler Dahil Oldu?*",
+        issueLocation: "Lütfen olayın nerede gerçekleştiğini belirtin*",
+        issueDate: "Lütfen olayın gerçekleştiği tarihi belirtin (Tarih)",
+        issueTime: "Lütfen olayın gerçekleştiği zamanı belirtin (Zaman)",
         introduce: "Kendinizi tanıtmak ister misiniz?",
         introduceYes: "Evet",
         introduceNo: "Hayır",
         fullName: "Tam Adı",
-        email: "Email *",
+        email: "Email*",
         gsm: "GSM",
-        relationship: "Şirketle olan ilişkiniz *",
+        relationship: "Şirketle olan ilişkiniz",
         currentEmployee: "Mevcut Çalışan",
         formerEmployee: "Eski Çalışan",
         nonEmployee: "Çalışan Değil",
         submit: "Gönder",
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
-        successTitle: "Başvurunuz İçin Teşekkürler!",
+        successTitle: "Bildiriminiz İçin Teşekkürler!",
         successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
         faqTitle: "Sıkça Sorulan Sorular",
         q1: "Getir Speak Up nedir?",
@@ -255,6 +336,24 @@ const translations = {
         q4: "Bildirimde bulunduğum için bir zarar görür müyüm?",
         a4: "Getir, bir sorunun ortaya çıkarılması için katkıda bulunan Getirlilerin yardımına değer verir. Dürüst ve iyi niyetli bir şekilde bildirimde çalışanlara herhangi bir misilleme (ayrımcılık, hak kaybı, tehdit vb. eylemler) yapılamaz. Ancak bilerek yanlış/asılsız bir suçlamada bulunanlar sorumlu tutulacaktır.",
         issueDetailsPlaceholder: "İddiaya konu olan ihlal ile ilgili tüm ayrıntıları sağlayın, olayın gerçekleştiği yerler, olayın tanıkları, durumun değerlendirmesi ve sorunun değerlendirilmesi ve düzeltilmesi için yararlı olabilecek diğer bilgiler dahil. Zamanınızı ayırın ve mümkün olduğunca fazla ayrıntı sağlayın; ancak, adınızı açıklamak istemiyorsanız, kimliğinizi açığa çıkarabilecek ayrıntıları eklememeye dikkat edin. Bu durumdan haberdar olan tek kişi sizseniz, bunu bilmemiz gerekebilir.",
-        involvedPartiesPlaceholder: "Bu davranışta bulunan kişi(ler)in kimliğini belirtin."
+        involvedPartiesPlaceholder: "Bu davranışta bulunan kişi(ler)in kimliğini belirtin.",
+        supplier: "Tedarikçi",
+        franchisee: "Franchise Sahibi",
+        contractor: "Yüklenici",
+        subcontractor: "Taşeron",
+        noDeclaration: "Beyan etmek istemiyorum",
+         gotohome: "Anasayfaya Geri Dön",
+        Turkey: "Türkiye",
+        Netherlands: "Hollanda",
+        Germany: "Almanya",
+        France: "France",
+        Spain: "İspanya",
+        UK: "Birleşik Krallık",
+        US: "Amerika",
+        other: "Diğer",
+        choose: "Seçiniz",
+        otherrelation: "Diğer",
+        otherPlaceholder: "Lütfen belirtiniz",
+        attachment: "Lütfen iddialarınızı destekleyen tüm kanıt belgelerini (ekran görüntüleri vb.) ekleyin."
     }
 };

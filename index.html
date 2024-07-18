@@ -16,7 +16,7 @@
             </select>
         </div>
         <h1 data-lang="title">Report an Incident</h1>
-        <p id="introText" data-lang="intro">You can report incidents to Getir via Getir Speak Up. When you choose to remain anonymous, Getir cannot identify you, and it will not be possible to contact you regarding your report. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
+        <p id="introText" data-lang="intro">You can report incidents to Getir via Getir Speak Up. When you choose to remain anonymous, Getir cannot identify you, and it will not be possible to contact you regarding your report. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1zMDduQ0TCIF0aldK69MmVF8yVw3_KXup/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
 
         <form id="incidentForm" enctype="multipart/form-data">
             <div class="form-group">
@@ -33,48 +33,43 @@
 
             <div id="additionalQuestions" class="hidden">
                 <div class="form-group">
-                    <label for="issueDetails">Issue Details *
-
-                     <span class="info-icon" data-tooltip="Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know.">ℹ️</span>
-    </label>
-    <textarea id="issueDetails" required placeholder="Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know."></textarea> <required>
+                   <label for="issueDetails" data-lang="issueDetails">Issue Details*</label> <br>
+    <textarea id="issueDetails" required placeholder="Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know."></textarea>
                 </div>
 
                 <div class="form-group">
 
-                    <label for="involvedParties">Who was involved? *
-        <span class="info-icon" data-tooltip="Please specify the identity of the person(s) engaged in this behavior.">ℹ️</span>
-    </label>
+                    <label for="involvedParties" data-lang="involvedParties">Who was involved?*</label><br>
     <input type="text" id="involvedParties" required placeholder="Please specify the identity of the person(s) engaged in this behavior.">
 
                 </div>
                 <div class="form-group">
-                    <label for="issueLocation" data-lang="issueLocation">Please indicate where the issue occurred *</label>
-                    <select id="issueLocation" name="issueLocation" required>
-                        <option value="" disabled selected>Choose</option>
-                        <option value="Turkey">Turkey</option>
-                        <option value="Netherlands">Netherlands</option>
-                        <option value="Germany">Germany</option>
-                        <option value="France">France</option>
-                        <option value="Spain">Spain</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="US">US</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <input type="text" id="otherLocation" name="otherLocation" class="hidden" placeholder="Please specify">
-                </div>
+    <label for="issueLocation" data-lang="issueLocation">Please indicate where the issue occurred*</label><br>
+    <select id="issueLocation" name="issueLocation" required>
+        <option value="" disabled selected data-lang="choose">Choose</option>
+        <option value="Turkey" data-lang="Turkey">Turkey</option>
+        <option value="Netherlands" data-lang="Netherlands">Netherlands</option>
+        <option value="Germany" data-lang="Germany">Germany</option>
+        <option value="France" data-lang="France">France</option>
+        <option value="Spain" data-lang="Spain">Spain</option>
+        <option value="United Kingdom" data-lang="UK">United Kingdom</option>
+        <option value="US" data-lang="US">US</option>
+        <option value="Other" data-lang="other">Other</option>
+    </select>
+    <input type="text" id="otherLocation" name="otherLocation" class="hidden" placeholder="Please specify">
+</div>
                 <div class="form-group">
-                    <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date) *</label>
+                    <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date)</label><br>
                     <input type="date" id="issueDate" name="issueDate" required>
                 </div>
                 <div class="form-group">
-                    <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time) *</label>
+                    <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time)</label><br>
                     <input type="time" id="issueTime" name="issueTime" required>
                 </div>
                 <div class="form-group">
-                    <label for="attachment" data-lang="attachment">Please attach any supporting evidence documents (screenshots, ect.) that support your claims, if available.</label> <br>
-                    <input type="file" id="attachment" name="attachment">
-                </div>
+    <label for="attachment" data-lang="attachment">Please attach any supporting evidence documents (screenshots, etc.) that support your claims, if available.</label> <br><br>
+    <input type="file" id="attachment" name="attachment">
+</div><br>
                 <div class="form-group">
                     <label data-lang="introduce">Would you like to introduce yourself?</label>
                     <div>
@@ -100,21 +95,21 @@
                         <input type="tel" id="gsm" name="gsm">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label data-lang="relationship">Your relationship with the company *</label>
-                    <div>
-                        <input type="radio" id="currentEmployee" name="relationship" value="current">
-                        <label for="currentEmployee" data-lang="currentEmployee">Current Employee</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="formerEmployee" name="relationship" value="former">
-                        <label for="formerEmployee" data-lang="formerEmployee">Former Employee</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="nonEmployee" name="relationship" value="non">
-                        <label for="nonEmployee" data-lang="nonEmployee">Not an Employee</label>
-                    </div>
-                </div>
+              <div class="form-group">
+    <label for="relationship" data-lang="relationship">Your relationship with the company</label><br>
+    <select id="relationship" name="relationship">
+        <option value="" selected data-lang="noDeclaration">I don't want to declare</option>
+        <option value="currentEmployee" data-lang="currentEmployee">Current Employee</option>
+        <option value="formerEmployee" data-lang="formerEmployee">Former Employee</option>
+        <option value="supplier" data-lang="supplier">Supplier</option>
+        <option value="franchisee" data-lang="franchisee">Franchisee</option>
+        <option value="contractor" data-lang="contractor">Contractor</option>
+        <option value="subcontractor" data-lang="subcontractor">Sub-Contractor</option>
+        <option value="otherrelation" data-lang="otherrelation">Other</option>
+        <!-- Yeni seçenekler buraya eklenebilir -->
+    </select>
+    <input type="text" id="otherrelationtext" name="otherrelationtext" class="hidden" placeholder="Please specify">
+</div>
             </div>
             
             <button type="submit" data-lang="submit" id="submitBtn">Submit</button>
@@ -129,7 +124,8 @@
         </div>
 
         <div id="successMessage" class="hidden" data-lang="successMessage">
-            Your report has been successfully submitted. Thank you!
+            Your report has been successfully submitted. Thank you! <br><br>
+             <button id="homeButton">Go to Home Page</button>
         </div>
     </div>
 

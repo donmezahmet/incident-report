@@ -126,12 +126,13 @@ button:hover {
 }
 
 .faq-question {
-    background-color: #007bff;
+     background-color: #007bff;
     color: #fff;
     border: none;
     padding: 10px;
     width: 100%;
     text-align: left;
+    font-size: 13px; /* Added font size */
     margin-bottom: 5px;
     cursor: pointer;
     border-radius: 5px;
@@ -143,6 +144,7 @@ button:hover {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+    font-size: 13px; /* Added font size */
 }
 
 .faq-question:focus + .faq-answer {
@@ -152,12 +154,17 @@ button:hover {
 .faq-question:focus {
     outline: none;
 }
-
-
+select {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
 
 .hidden {
     display: none;
 }
+
 .info-icon {
     font-size: 16px;
     cursor: pointer;
@@ -183,6 +190,7 @@ button:hover {
 .info-icon:hover::after {
     display: block;
 }
+
 
 @media (max-width: 768px) {
     body {
@@ -216,4 +224,12 @@ button:hover {
         left: 0;
         transform: translate(0, -50%);
     }
+}
+
+textarea::placeholder,
+input::placeholder {
+    font-family: 'Arial', Arial, monospace; /* Burada placeholder için kullanılacak fontu belirleyin */
+    font-size: 14px; /* Font boyutunu ayarlayın */
+    line-height:20px;
+      font-style: italic;
 }
