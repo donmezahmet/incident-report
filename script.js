@@ -11,18 +11,23 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
     } else {
         document.getElementById('warning').classList.add('hidden');
         document.getElementById('additionalQuestions').classList.remove('hidden');
-        
-        // Loading animasyonu göster
+
+          // Loading animasyonu göster
         document.getElementById('loading').classList.remove('hidden');
         document.querySelector('.container').style.opacity = '0.5';
-        
+
+
         // Form verilerini topla
         const issueDetails = document.getElementById('issueDetails').value;
         const involvedParties = document.getElementById('involvedParties').value;
         const issueLocation = document.getElementById('issueLocation').value;
         const otherLocation = document.getElementById('otherLocation').value;
+        const incidentDuration = document.getElementById('incidentDuration').value;
+        const ongoing = document.getElementById('ongoing').value;
         const issueDate = document.getElementById('issueDate').value;
         const issueTime = document.getElementById('issueTime').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
 
         const location = issueLocation === 'Other' ? otherLocation : issueLocation;
 
@@ -33,6 +38,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
 
         const relationship = document.getElementById('relationship').value;
 
+
         // Unique ticket number oluştur
         const ticketNumber = 'TICKET-' + Date.now();
 
@@ -41,8 +47,12 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         formData.append('issueDetails', issueDetails);
         formData.append('involvedParties', involvedParties);
         formData.append('location', location);
+        formData.append('incidentDuration', incidentDuration);
+        formData.append('ongoing', ongoing);
         formData.append('issueDate', issueDate);
         formData.append('issueTime', issueTime);
+        formData.append('startDate', startDate);
+        formData.append('endDate', endDate);
         formData.append('introduce', introduce);
         formData.append('fullName', fullName);
         formData.append('email', email);
@@ -58,6 +68,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                 formData.append('attachment', base64data);
                 formData.append('attachmentName', attachment.name);
                 formData.append('attachmentType', attachment.type);
+
 
                 // Dosya yükleme işlemi
                 fetch('https://script.google.com/macros/s/AKfycbycTedLyfNKg6uFkPGWi5_4DyYwoE3DaSu634NSXQUK2dR-2tUJy9at1g-QGtzACEpT5Q/exec?', {
@@ -76,7 +87,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         }
 
         // Verileri Google Sheets'e gönder
-        fetch('https://script.google.com/macros/s/AKfycbzAi4aOvCNaEbkbVV4WEQ-e2gLgvCpge2mL-2K6amnaV7CqeVW9uPDIPloPflqgxPdP/exec?' + new URLSearchParams(formData), {
+        fetch('https://script.google.com/macros/s/AKfycbzJ3JEbTQO9nzeu-GzMoObmyQ49Ust2PHUh37XTY3Qw31yTLylpOdtZK4JD3XibyA15/exec?' + new URLSearchParams(formData), {
             method: 'GET'
         })
         .then(response => response.json())
@@ -86,36 +97,32 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             document.querySelector('.container').style.opacity = '1';
             if (data.status === 'success') {
                 document.getElementById('incidentForm').classList.add('hidden');
-                document.getElementById('introText').classList.add('hidden'); // Intro metnini gizle
+                document.getElementById('introText').classList.add('hidden');
                 document.getElementById('successMessage').classList.remove('hidden');
-                document.querySelector('.language-selector').classList.add('hidden'); // Dil seçimini gizle
-                document.querySelector('.faq-container').classList.add('hidden'); // faq gizle
+                document.querySelector('.language-selector').classList.add('hidden');
+                document.querySelector('.faq-container').classList.add('hidden');
                 document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
-        
-const language = document.getElementById('language').value;
-if (language === 'tr') {
-    const homeButton = document.createElement('button');
-    homeButton.id = 'homeButton';
-    homeButton.textContent = 'Ana Sayfaya Git';
-    homeButton.onclick = function() {
-        window.location.href = 'index.html';
-    };
 
-    // Yeni satır elemanları oluşturun
-    const newLine1 = document.createElement('br');
-    const newLine2 = document.createElement('br');
-    
-    // SuccessMessage'e yeni satır elemanlarını ekleyin
-    document.getElementById('successMessage').appendChild(newLine1);
-    document.getElementById('successMessage').appendChild(newLine2);
-    document.getElementById('successMessage').appendChild(homeButton);
-}
+                const language = document.getElementById('language').value;
+                if (language === 'tr') {
+                    const homeButton = document.createElement('button');
+                    homeButton.id = 'homeButton';
+                    homeButton.textContent = 'Ana Sayfaya Git';
+                    homeButton.onclick = function() {
+                        window.location.href = 'index.html';
+                    };
 
-
-            } 
-
-
-            else {
+                    // Yeni satır elemanları oluşturun
+                    const newLine1 = document.createElement('br');
+                    const newLine2 = document.createElement('br');
+                    
+                    
+                    // SuccessMessage'e yeni satır elemanlarını ekleyin
+                    document.getElementById('successMessage').appendChild(newLine1);
+                    document.getElementById('successMessage').appendChild(newLine2);
+                    document.getElementById('successMessage').appendChild(homeButton);
+                }
+            } else {
                 alert('Form gönderilirken bir hata oluştu: ' + data.message);
             }
         })
@@ -159,6 +166,61 @@ document.getElementById('introduceNo').addEventListener('change', function() {
     document.getElementById('email').removeAttribute('required');
 });
 
+document.getElementById('incidentDuration').addEventListener('change', function() {
+    const dateQuestions = document.getElementById('dateQuestions');
+    const ongoingQuestion = document.getElementById('ongoingQuestion');
+    const dateRangeQuestions = document.getElementById('dateRangeQuestions');
+    const timeQuestion = document.getElementById('timeQuestion');
+
+    dateQuestions.classList.add('hidden');
+    ongoingQuestion.classList.add('hidden');
+    dateRangeQuestions.classList.add('hidden');
+    timeQuestion.classList.add('hidden');
+
+    document.getElementById('issueDate').removeAttribute('required');
+    document.getElementById('ongoing').removeAttribute('required');
+    document.getElementById('startDate').removeAttribute('required');
+    document.getElementById('endDate').removeAttribute('required');
+    document.getElementById('issueTime').removeAttribute('required');
+
+    if (this.value === 'once') {
+        dateQuestions.classList.remove('hidden');
+        timeQuestion.classList.remove('hidden');
+        document.getElementById('issueDate').setAttribute('required', 'required');
+        document.getElementById('issueTime').setAttribute('required', 'required');
+    } else if (this.value === 'period') {
+        ongoingQuestion.classList.remove('hidden');
+        document.getElementById('ongoing').setAttribute('required', 'required');
+    }
+});
+
+document.getElementById('ongoing').addEventListener('change', function() {
+    const dateQuestions = document.getElementById('dateQuestions');
+    const dateRangeQuestions = document.getElementById('dateRangeQuestions');
+    const timeQuestion = document.getElementById('timeQuestion');
+
+    dateQuestions.classList.add('hidden');
+    dateRangeQuestions.classList.add('hidden');
+    timeQuestion.classList.add('hidden');
+
+    document.getElementById('issueDate').removeAttribute('required');
+    document.getElementById('startDate').removeAttribute('required');
+    document.getElementById('endDate').removeAttribute('required');
+    document.getElementById('issueTime').removeAttribute('required');
+
+    if (this.value === 'yes') {
+        dateQuestions.classList.remove('hidden');
+        timeQuestion.classList.remove('hidden');
+        document.getElementById('issueDate').setAttribute('required', 'required');
+        document.getElementById('issueTime').setAttribute('required', 'required');
+    } else if (this.value === 'no') {
+        dateRangeQuestions.classList.remove('hidden');
+        document.getElementById('startDate').setAttribute('required', 'required');
+        document.getElementById('endDate').setAttribute('required', 'required');
+    }
+});
+
+
 // Dil değiştirme
 document.getElementById('language').addEventListener('change', function() {
     const lang = this.value;
@@ -177,18 +239,18 @@ document.getElementById('language').addEventListener('change', function() {
     document.getElementById('q4').textContent = translations[lang].q4;
     document.getElementById('a4').textContent = translations[lang].a4;
 
- // Placeholderları güncelle
+    
+    // Placeholderları güncelle
     document.getElementById('issueDetails').placeholder = translations[lang].issueDetailsPlaceholder;
     document.getElementById('involvedParties').placeholder = translations[lang].involvedPartiesPlaceholder;
     document.getElementById('otherLocation').placeholder = translations[lang].otherPlaceholder;
     const relationshipSelect = document.getElementById('relationship');
-    relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].noDeclaration;
-    relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].other;
-    // Attachment metnini güncelle
+    relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].choose; // Güncellendi
+    relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].otherrelation; // Güncellendi
     document.querySelector('[data-lang="attachment"]').innerHTML = translations[lang].attachment;
-    // Other placeholder metnini güncelle
     document.getElementById('otherrelationtext').placeholder = translations[lang].otherPlaceholder;
 });
+
 
 // Relationship dropdown değiştiğinde diğer seçeneği göster
 document.getElementById('relationship').addEventListener('change', function() {
@@ -199,6 +261,7 @@ document.getElementById('relationship').addEventListener('change', function() {
         otherRelationshipField.classList.add('hidden');
     }
 });
+
 
 // FAQ toggle işlemi
 document.querySelectorAll('.faq-question').forEach(question => {
@@ -220,6 +283,7 @@ document.querySelectorAll('.faq-question').forEach(question => {
     });
 });
 
+
 // Relationship select rengini ayarla
 document.getElementById('relationship').addEventListener('change', function() {
     if (this.value === "") {
@@ -229,23 +293,26 @@ document.getElementById('relationship').addEventListener('change', function() {
     }
 });
 
+
 // Sayfa yüklendiğinde "Select" metninin rengini gri yap
 window.addEventListener('DOMContentLoaded', (event) => {
     const selectElement = document.getElementById('relationship');
     if (selectElement.value === "") {
         selectElement.style.color = 'gray';
     }
+
+    document.getElementById('timeQuestion').classList.add('hidden');
 });
+
 
 // Add event listener for home button
 document.getElementById('homeButton').addEventListener('click', function() {
-    window.location.href = 'index.html'; // Replace 'index.html' with your main page URL if it's different
+    window.location.href = 'index.html';
 });
-
 
 const translations = {
     en: {
-        selectLanguage: "Select Language",
+      selectLanguage: "Select Language",
         title: "Report an Incident",
         intro: "You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id='privacy-link' href='https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view' target='_blank'>Getir Speak Up Privacy Notice</a>.",
         terms: "Before Getting Started",
@@ -286,19 +353,27 @@ const translations = {
         contractor: "Contractor",
         subcontractor: "Subcontractor",
         noDeclaration: "I don't want to declare",
-         goToHomePage: "Go to Home Page",
+        goToHomePage: "Go to Home Page",
         Turkey: "Turkey",
-    Netherlands: "Netherlands",
-    Germany: "Germany",
-    France: "France",
-    Spain: "Spain",
-    UK: "United Kingdom",
-    US: "US",
-    other: "Other",
+        Netherlands: "Netherlands",
+        Germany: "Germany",
+        France: "France",
+        Spain: "Spain",
+        UK: "United Kingdom",
+        US: "US",
+        other: "Other",
         choose: "Choose",
-         otherPlaceholder: "Please specify",
-        attachment: "Please attach any supporting evidence documents (screenshots, etc.) that support your claims, if available."
-
+        otherPlaceholder: "Please specify",
+        attachment: "Please attach any supporting evidence documents...",
+        incidentDuration: "What is the duration of the incident?*",
+        once: "It happened once",
+        period: "Over a period of time",
+        ongoing: "Is it still ongoing?",
+        yes: "Yes",
+        no: "No",
+        otherrelation: "Other",
+        startDate: "Start Date",
+        endDate: "End Date"
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -315,7 +390,7 @@ const translations = {
         introduce: "Kendinizi tanıtmak ister misiniz?",
         introduceYes: "Evet",
         introduceNo: "Hayır",
-        fullName: "Tam Adı",
+        fullName: "Ad - Soyad",
         email: "Email*",
         gsm: "GSM",
         relationship: "Şirketle olan ilişkiniz",
@@ -342,18 +417,26 @@ const translations = {
         contractor: "Yüklenici",
         subcontractor: "Taşeron",
         noDeclaration: "Beyan etmek istemiyorum",
-         gotohome: "Anasayfaya Geri Dön",
+        goToHomePage: "Anasayfaya Geri Dön",
         Turkey: "Türkiye",
         Netherlands: "Hollanda",
         Germany: "Almanya",
-        France: "France",
+        France: "Fransa",
         Spain: "İspanya",
         UK: "Birleşik Krallık",
         US: "Amerika",
         other: "Diğer",
         choose: "Seçiniz",
-        otherrelation: "Diğer",
         otherPlaceholder: "Lütfen belirtiniz",
-        attachment: "Lütfen iddialarınızı destekleyen tüm kanıt belgelerini (ekran görüntüleri vb.) ekleyin."
+        attachment: "Lütfen iddialarınızı destekleyen tüm kanıt belgelerini (ekran görüntüleri vb.) ekleyin.",
+        incidentDuration: "Bu vaka ne sürede meydana geldi?*",
+        once: "Bir kere oldu",
+        period: "Bir zaman aralığında oldu",
+        ongoing: "Halen devam ediyor mu?",
+        yes: "Evet",
+        no: "Hayır",
+        otherrelation: "Diğer",
+        startDate: "Başlangıç Tarihi",
+        endDate: "Bitiş Tarihi"
     }
 };
