@@ -1,0 +1,9 @@
+.language-selector {
+    position: static;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container {
+    text-align: center;
+}

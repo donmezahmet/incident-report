@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query an Incident</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="query_styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <label for="language" data-lang="selectLanguage">Select Language</label>
+            <select id="language" name="language">
+                <option value="en">English</option>
+                <option value="tr">Türkçe</option>
+            </select>
+        </div>
+        <h1 data-lang="queryTitle">Query an Incident</h1>
+        
+        <form id="queryForm">
+            <div class="form-group">
+                <label for="ticketNumber" data-lang="ticketNumber">Ticket Number</label>
+                <input type="text" id="ticketNumber" name="ticketNumber" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="securityQuestion" data-lang="securityQuestion">Security Question</label>
+                <select id="securityQuestion" name="securityQuestion" required>
+                    <option value="firstPet" data-lang="firstPet">What was the name of your first pet?</option>
+                    <option value="motherMaiden" data-lang="motherMaiden">What is your mother's maiden name?</option>
+                    <option value="firstSchool" data-lang="firstSchool">What was the name of your first school?</option>
+                    <option value="favoriteTeacher" data-lang="favoriteTeacher">Who was your favorite teacher?</option>
+                    <option value="birthCity" data-lang="birthCity">In which city were you born?</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="securityAnswer" data-lang="securityAnswer">Your Answer</label>
+                <input type="text" id="securityAnswer" name="securityAnswer" required>
+            </div>
+
+            <button type="submit" data-lang="submitBtn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('language').addEventListener('change', function() {
+            const lang = this.value;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.innerHTML = translations[lang][el.getAttribute('data-lang')];
+            });
+        });
+
+        const translations = {
+            en: {
+                selectLanguage: "Select Language",
+                queryTitle: "Query an Incident",
+                ticketNumber: "Ticket Number",
+                securityQuestion: "Security Question",
+                firstPet: "What was the name of your first pet?",
+                motherMaiden: "What is your mother's maiden name?",
+                firstSchool: "What was the name of your first school?",
+                favoriteTeacher: "Who was your favorite teacher?",
+                birthCity: "In which city were you born?",
+                securityAnswer: "Your Answer",
+                submitBtn: "Submit"
+            },
+            tr: {
+                selectLanguage: "Dil Seçiniz",
+                queryTitle: "Bildirim Sorgulama",
+                ticketNumber: "Bildirim Numarası",
+                securityQuestion: "Gizli Soru",
+                firstPet: "İlk evcil hayvanınızın adı nedir?",
+                motherMaiden: "Annenizin kızlık soyadı nedir?",
+                firstSchool: "İlkokulunuzun adı nedir?",
+                favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
+                birthCity: "Hangi şehirde doğdunuz?",
+                securityAnswer: "Cevabınız",
+                submitBtn: "Gönder"
+            }
+        };
+    </script>
+</body>
+</html>

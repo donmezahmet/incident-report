@@ -95,7 +95,7 @@
 
                 <div class="form-group">
                     <label for="attachment" data-lang="attachment">Please attach any supporting evidence documents (screenshots, etc.) that support your claims, if available.</label> <br><br>
-                    <input type="file" id="attachment" name="attachment">
+                    <input type="file" id="attachment" name="attachment" multiple>
                 </div><br>
 
                 <div class="form-group">
@@ -140,6 +140,22 @@
                     </select>
                     <input type="text" id="otherrelationtext" name="otherrelationtext" class="hidden" placeholder="Please specify">
                 </div>
+
+                <div class="form-group">
+                    <label id="securityQuestionLabel" for="securityQuestion" data-lang="securityQuestion">Gizli Soru (Bilet durumu takibi için gereklidir)</label>
+<select id="securityQuestion" name="securityQuestion">
+    <option value="" disabled selected data-lang="choose">Seçiniz</option>
+    <option value="firstPet" data-lang="firstPet">İlk evcil hayvanınızın adı nedir?</option>
+    <option value="motherMaiden" data-lang="motherMaiden">Annenizin kızlık soyadı nedir?</option>
+    <option value="firstSchool" data-lang="firstSchool">İlkokulunuzun adı nedir?</option>
+    <option value="favoriteTeacher" data-lang="favoriteTeacher">En sevdiğiniz öğretmenin adı nedir?</option>
+    <option value="birthCity" data-lang="birthCity">Hangi şehirde doğdunuz?</option>
+</select>
+<input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your Answer">
+<p id="securityWarning" class="hidden" data-lang="securityWarning">Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız.</p>
+
+                </div>
+
             </div>
             
             <button type="submit" data-lang="submit" id="submitBtn">Submit</button>

@@ -12,10 +12,9 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         document.getElementById('warning').classList.add('hidden');
         document.getElementById('additionalQuestions').classList.remove('hidden');
 
-          // Loading animasyonu göster
+        // Loading animasyonu göster
         document.getElementById('loading').classList.remove('hidden');
         document.querySelector('.container').style.opacity = '0.5';
-
 
         // Form verilerini topla
         const issueDetails = document.getElementById('issueDetails').value;
@@ -37,7 +36,8 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         const gsm = document.getElementById('gsm').value || '';
 
         const relationship = document.getElementById('relationship').value;
-
+        const securityQuestion = document.getElementById('securityQuestion').value;
+        const securityAnswer = document.getElementById('securityAnswer').value;
 
         // Unique ticket number oluştur
         const ticketNumber = 'TICKET-' + Date.now();
@@ -58,80 +58,133 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         formData.append('email', email);
         formData.append('gsm', gsm);
         formData.append('relationship', relationship);
+        formData.append('securityQuestion', securityQuestion);
+        formData.append('securityAnswer', securityAnswer);
         formData.append('ticketNumber', ticketNumber);
 
-        const attachment = document.getElementById('attachment').files[0];
-        if (attachment) {
-            const reader = new FileReader();
-            reader.onloadend = function() {
-                const base64data = reader.result.split(',')[1];
-                formData.append('attachment', base64data);
-                formData.append('attachmentName', attachment.name);
-                formData.append('attachmentType', attachment.type);
+        // Dosya yükleme işlemi
+        const attachments = document.getElementById('attachment').files;
 
+        if (attachments.length > 0) {
+            let uploadPromises = [];
 
-                // Dosya yükleme işlemi
-                fetch('https://script.google.com/macros/s/AKfycbycTedLyfNKg6uFkPGWi5_4DyYwoE3DaSu634NSXQUK2dR-2tUJy9at1g-QGtzACEpT5Q/exec?', {
-                    method: 'POST',
-                    body: formData
+            for (let i = 0; i < attachments.length; i++) {
+                const attachment = attachments[i];
+                const reader = new FileReader();
+
+                const uploadPromise = new Promise((resolve, reject) => {
+                    reader.onloadend = function() {
+                        const base64data = reader.result.split(',')[1];
+                        const fileData = new FormData();
+                        fileData.append('attachment', base64data);
+                        fileData.append('attachmentName', attachment.name);
+                        fileData.append('attachmentType', attachment.type);
+                        fileData.append('ticketNumber', ticketNumber);
+
+                        fetch('https://script.google.com/macros/s/AKfycbxSrzlR3YJ8I10HG_JglvnSODvcPFZN33yioNsNMLU3v4n18-Sl_YuK1jXokX_vSTYsQQ/exec?', {
+                            method: 'POST',
+                            body: fileData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            console.log("File upload response:", data);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.error('Error uploading file:', error);
+                            reject();
+                        });
+                    }
+                    reader.readAsDataURL(attachment);
+                });
+
+                uploadPromises.push(uploadPromise);
+            }
+
+            Promise.all(uploadPromises).then(() => {
+                // Verileri Google Sheets'e gönder
+                fetch('https://script.google.com/macros/s/AKfycby06EXgg78wSEjYVFjCJbF4qPAseXTxy9SLJ4s3eEtcpGNsSOn__9JAJ9MZwIW-rqnq/exec?' + new URLSearchParams(formData), {
+                    method: 'GET'
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    console.log("File upload response:", data);
+                    console.log("Response received:", data);
+                    document.getElementById('loading').classList.add('hidden');
+                    document.querySelector('.container').style.opacity = '1';
+                    if (data.status === 'success') {
+                        document.getElementById('incidentForm').classList.add('hidden');
+                        document.getElementById('introText').classList.add('hidden');
+                        document.getElementById('successMessage').classList.remove('hidden');
+                        document.querySelector('.language-selector').classList.add('hidden');
+                        document.querySelector('.faq-container').classList.add('hidden');
+                        document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
+
+                        const language = document.getElementById('language').value;
+                        const successMessageElement = document.getElementById('successMessage');
+                        successMessageElement.innerHTML = translations[language].successMessage + ' ' + translations[language].ticketNumber + ticketNumber + '. ' + translations[language].checkStatus;
+                        const homeButton = document.createElement('button');
+                        homeButton.id = 'homeButton';
+                        homeButton.textContent = translations[language].goToHomePage;
+                        homeButton.onclick = function() {
+                            window.location.href = 'index.html';
+                        };
+
+                        document.getElementById('successMessage').appendChild(homeButton);
+                    } else {
+                        alert('Form gönderilirken bir hata oluştu: ' + data.message);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error uploading file:', error);
+                    console.error('Error:', error);
+                    document.getElementById('loading').classList.add('hidden');
+                    document.querySelector('.container').style.opacity = '1';
+                    alert('Form gönderilirken bir hata oluştu.');
                 });
-            }
-            reader.readAsDataURL(attachment);
-        }
+            }).catch(() => {
+                alert('Dosyalar yüklenirken bir hata oluştu.');
+                document.getElementById('loading').classList.add('hidden');
+                document.querySelector('.container').style.opacity = '1';
+            });
+        } else {
+            // Dosya yoksa sadece form verilerini gönder
+            fetch('https://script.google.com/macros/s/AKfycby06EXgg78wSEjYVFjCJbF4qPAseXTxy9SLJ4s3eEtcpGNsSOn__9JAJ9MZwIW-rqnq/exec?' + new URLSearchParams(formData), {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response received:", data);
+                document.getElementById('loading').classList.add('hidden');
+                document.querySelector('.container').style.opacity = '1';
+                if (data.status === 'success') {
+                    document.getElementById('incidentForm').classList.add('hidden');
+                    document.getElementById('introText').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    document.querySelector('.language-selector').classList.add('hidden');
+                    document.querySelector('.faq-container').classList.add('hidden');
+                    document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
 
-        // Verileri Google Sheets'e gönder
-        fetch('https://script.google.com/macros/s/AKfycbzJ3JEbTQO9nzeu-GzMoObmyQ49Ust2PHUh37XTY3Qw31yTLylpOdtZK4JD3XibyA15/exec?' + new URLSearchParams(formData), {
-            method: 'GET'
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Response received:", data);
-            document.getElementById('loading').classList.add('hidden');
-            document.querySelector('.container').style.opacity = '1';
-            if (data.status === 'success') {
-                document.getElementById('incidentForm').classList.add('hidden');
-                document.getElementById('introText').classList.add('hidden');
-                document.getElementById('successMessage').classList.remove('hidden');
-                document.querySelector('.language-selector').classList.add('hidden');
-                document.querySelector('.faq-container').classList.add('hidden');
-                document.querySelector('h1').textContent = translations[document.getElementById('language').value].successTitle;
-
-                const language = document.getElementById('language').value;
-                if (language === 'tr') {
+                    const language = document.getElementById('language').value;
+                    const successMessageElement = document.getElementById('successMessage');
+                    successMessageElement.innerHTML = translations[language].successMessage + ' ' + translations[language].ticketNumber + ticketNumber + '. ' + translations[language].checkStatus;
                     const homeButton = document.createElement('button');
                     homeButton.id = 'homeButton';
-                    homeButton.textContent = 'Ana Sayfaya Git';
+                    homeButton.textContent = translations[language].goToHomePage;
                     homeButton.onclick = function() {
                         window.location.href = 'index.html';
                     };
 
-                    // Yeni satır elemanları oluşturun
-                    const newLine1 = document.createElement('br');
-                    const newLine2 = document.createElement('br');
-                    
-                    
-                    // SuccessMessage'e yeni satır elemanlarını ekleyin
-                    document.getElementById('successMessage').appendChild(newLine1);
-                    document.getElementById('successMessage').appendChild(newLine2);
                     document.getElementById('successMessage').appendChild(homeButton);
+                } else {
+                    alert('Form gönderilirken bir hata oluştu: ' + data.message);
                 }
-            } else {
-                alert('Form gönderilirken bir hata oluştu: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('loading').classList.add('hidden');
-            document.querySelector('.container').style.opacity = '1';
-            alert('Form gönderilirken bir hata oluştu.');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.querySelector('.container').style.opacity = '1';
+                alert('Form gönderilirken bir hata oluştu.');
+            });
+        }
     }
 });
 
@@ -220,6 +273,31 @@ document.getElementById('ongoing').addEventListener('change', function() {
     }
 });
 
+// Hata mesajını sayfa yüklendiğinde ekle
+window.addEventListener('DOMContentLoaded', (event) => {
+    addErrorMessage();
+    const selectElement = document.getElementById('relationship');
+    if (selectElement.value === "") {
+        selectElement.style.color = 'gray';
+    }
+
+    document.getElementById('timeQuestion').classList.add('hidden');
+});
+
+function addErrorMessage() {
+    const errorMessages = document.querySelectorAll('.errorMessages');
+    errorMessages.forEach(el => el.remove());
+
+    const language = document.getElementById('language').value;
+    const errorMessage = translations[language].errorMessage;
+    const errorMessageElement = document.createElement('div');
+    errorMessageElement.className = 'errorMessages';
+    errorMessageElement.style.color = 'red';
+    errorMessageElement.innerHTML = errorMessage;
+
+    const securityQuestionDiv = document.getElementById('securityQuestion').parentElement;
+    securityQuestionDiv.appendChild(errorMessageElement);
+}
 
 // Dil değiştirme
 document.getElementById('language').addEventListener('change', function() {
@@ -238,19 +316,33 @@ document.getElementById('language').addEventListener('change', function() {
     document.getElementById('a3').textContent = translations[lang].a3;
     document.getElementById('q4').textContent = translations[lang].q4;
     document.getElementById('a4').textContent = translations[lang].a4;
+    document.getElementById('securityQuestionLabel').textContent = translations[lang].securityQuestion;
+    document.getElementById('securityAnswer').placeholder = translations[lang].securityAnswerPlaceholder;
 
+    // Security Question Options
+    const securityQuestionSelect = document.getElementById('securityQuestion');
+    securityQuestionSelect.innerHTML = `
+        <option value="" disabled selected>${translations[lang].choose}</option>
+        <option value="firstPet">${translations[lang].firstPet}</option>
+        <option value="motherMaiden">${translations[lang].motherMaiden}</option>
+        <option value="firstSchool">${translations[lang].firstSchool}</option>
+        <option value="favoriteTeacher">${translations[lang].favoriteTeacher}</option>
+        <option value="birthCity">${translations[lang].birthCity}</option>
+    `;
     
     // Placeholderları güncelle
     document.getElementById('issueDetails').placeholder = translations[lang].issueDetailsPlaceholder;
     document.getElementById('involvedParties').placeholder = translations[lang].involvedPartiesPlaceholder;
     document.getElementById('otherLocation').placeholder = translations[lang].otherPlaceholder;
     const relationshipSelect = document.getElementById('relationship');
-    relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].choose; // Güncellendi
-    relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].otherrelation; // Güncellendi
+    relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].choose;
+    relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].otherrelation;
     document.querySelector('[data-lang="attachment"]').innerHTML = translations[lang].attachment;
     document.getElementById('otherrelationtext').placeholder = translations[lang].otherPlaceholder;
-});
 
+    // Hata mesajını güncelle
+    addErrorMessage();
+});
 
 // Relationship dropdown değiştiğinde diğer seçeneği göster
 document.getElementById('relationship').addEventListener('change', function() {
@@ -261,7 +353,6 @@ document.getElementById('relationship').addEventListener('change', function() {
         otherRelationshipField.classList.add('hidden');
     }
 });
-
 
 // FAQ toggle işlemi
 document.querySelectorAll('.faq-question').forEach(question => {
@@ -283,7 +374,6 @@ document.querySelectorAll('.faq-question').forEach(question => {
     });
 });
 
-
 // Relationship select rengini ayarla
 document.getElementById('relationship').addEventListener('change', function() {
     if (this.value === "") {
@@ -293,18 +383,6 @@ document.getElementById('relationship').addEventListener('change', function() {
     }
 });
 
-
-// Sayfa yüklendiğinde "Select" metninin rengini gri yap
-window.addEventListener('DOMContentLoaded', (event) => {
-    const selectElement = document.getElementById('relationship');
-    if (selectElement.value === "") {
-        selectElement.style.color = 'gray';
-    }
-
-    document.getElementById('timeQuestion').classList.add('hidden');
-});
-
-
 // Add event listener for home button
 document.getElementById('homeButton').addEventListener('click', function() {
     window.location.href = 'index.html';
@@ -312,7 +390,7 @@ document.getElementById('homeButton').addEventListener('click', function() {
 
 const translations = {
     en: {
-      selectLanguage: "Select Language",
+        selectLanguage: "Select Language",
         title: "Report an Incident",
         intro: "You can send your questions or report incidents to Getir via Getir Speak Up. When you choose to stay anonymous, Getir cannot identify your identity and can only communicate with you via Getir Speak Up. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id='privacy-link' href='https://drive.google.com/file/d/1gnPx6v5cgvG8CF0i5tVd-YHrmMfYSc2U/view' target='_blank'>Getir Speak Up Privacy Notice</a>.",
         terms: "Before Getting Started",
@@ -337,6 +415,8 @@ const translations = {
         warning: "You cannot proceed without agreeing to the Terms and Conditions.",
         successTitle: "Thank you for your submission!",
         successMessage: "Your report has been successfully submitted. Thank you!",
+        ticketNumber: "Your ticket number is ",
+        checkStatus: "You can check the status of your ticket using this number.",
         faqTitle: "FAQ",
         q1: "What is Getir Speak Up?",
         a1: "It is a 24/7 support line where Getir employees can share 'ethical misconduct' they have observed or experienced and express their concerns. Reports received are directed to the Getir Ethics and Compliance Executive on the same day, and an investigation is initiated as soon as possible.",
@@ -373,7 +453,15 @@ const translations = {
         no: "No",
         otherrelation: "Other",
         startDate: "Start Date",
-        endDate: "End Date"
+        endDate: "End Date",
+        securityQuestion: "Security Question (Required for ticket status tracking)",
+        firstPet: "What is the name of your first pet?",
+        motherMaiden: "What is your mother's maiden name?",
+        firstSchool: "What is the name of your first school?",
+        favoriteTeacher: "What is the name of your favorite teacher?",
+        birthCity: "In which city were you born?",
+        securityAnswerPlaceholder: "Your Answer",
+        errorMessage: "This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report."
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -401,6 +489,8 @@ const translations = {
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
         successTitle: "Bildiriminiz İçin Teşekkürler!",
         successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
+        ticketNumber: "Bilet numaranız ",
+        checkStatus: "Bu numara ile biletinizin durumunu kontrol edebilirsiniz.",
         faqTitle: "Sıkça Sorulan Sorular",
         q1: "Getir Speak Up nedir?",
         a1: "Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir Etik ve Uyum Yöneticisine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.",
@@ -417,7 +507,7 @@ const translations = {
         contractor: "Yüklenici",
         subcontractor: "Taşeron",
         noDeclaration: "Beyan etmek istemiyorum",
-        goToHomePage: "Anasayfaya Geri Dön",
+        goToHomePage: "Ana Sayfaya Git",
         Turkey: "Türkiye",
         Netherlands: "Hollanda",
         Germany: "Almanya",
@@ -437,6 +527,14 @@ const translations = {
         no: "Hayır",
         otherrelation: "Diğer",
         startDate: "Başlangıç Tarihi",
-        endDate: "Bitiş Tarihi"
+        endDate: "Bitiş Tarihi",
+        securityQuestion: "Gizli Soru (Bilet durumu takibi için gereklidir)",
+        firstPet: "İlk evcil hayvanınızın adı nedir?",
+        motherMaiden: "Annenizin kızlık soyadı nedir?",
+        firstSchool: "İlkokulunuzun adı nedir?",
+        favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
+        birthCity: "Hangi şehirde doğdunuz?",
+        securityAnswerPlaceholder: "Cevabınız",
+        errorMessage: "Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız."
     }
 };
