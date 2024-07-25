@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report an Incident</title>
+    <title>Home</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home_styles.css">
 </head>
 <body>
     <div class="container">
@@ -15,178 +16,41 @@
                 <option value="tr">Türkçe</option>
             </select>
         </div>
-        <h1 data-lang="title">Report an Incident</h1>
-        <p id="introText" data-lang="intro">You can report incidents to Getir via Getir Speak Up. When you choose to remain anonymous, Getir cannot identify you, and it will not be possible to contact you regarding your report. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1zMDduQ0TCIF0aldK69MmVF8yVw3_KXup/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
-
-        <form id="incidentForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <label data-lang="terms">Before Getting Started</label>
-                <div>
-                    <input type="radio" id="agree" name="terms" value="agree">
-                    <label for="agree" data-lang="agree">I have read and agree to the Terms and Conditions.</label>
-                </div>
-                <div>
-                    <input type="radio" id="disagree" name="terms" value="disagree">
-                    <label for="disagree" data-lang="disagree">I do not agree to the Terms and Conditions.</label>
-                </div>
-            </div>
-
-            <div id="additionalQuestions" class="hidden">
-                <div class="form-group">
-                   <label for="issueDetails" data-lang="issueDetails">Issue Details*</label> <br>
-                   <textarea id="issueDetails" required placeholder="Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="involvedParties" data-lang="involvedParties">Who was involved?*</label><br>
-                    <input type="text" id="involvedParties" required placeholder="Please specify the identity of the person(s) engaged in this behavior.">
-                </div>
-
-                <div class="form-group">
-                    <label for="incidentDuration" data-lang="incidentDuration">What is the duration of the incident?*</label><br>
-                    <select id="incidentDuration" name="incidentDuration" required>
-                        <option value="choose" data-lang="choose">Choose</option>
-                        <option value="once" data-lang="once">It happened once</option>
-                        <option value="period" data-lang="period">Over a period of time</option>
-                    </select>
-                </div>
-
-                <div class="form-group hidden" id="ongoingQuestion">
-                    <label for="ongoing" data-lang="ongoing">Is it still ongoing?</label><br>
-                    <select id="ongoing" name="ongoing">
-                        <option value="choose" data-lang="choose">Choose</option>
-                        <option value="yes" data-lang="yes">Yes</option>
-                        <option value="no" data-lang="no">No</option>
-                    </select>
-                </div>
-
-                <div class="form-group hidden" id="dateQuestions">
-                    <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date)</label><br>
-                    <input type="date" id="issueDate" name="issueDate">
-                </div>
-
-                <div class="form-group hidden" id="dateRangeQuestions">
-                    <label for="startDate" data-lang="startDate">Start Date</label><br>
-                    <input type="date" id="startDate" name="startDate"><br>
-                    <label for="endDate" data-lang="endDate">End Date</label><br>
-                    <input type="date" id="endDate" name="endDate">
-                </div>
-
-                <div class="form-group hidden" id="timeQuestion">
-                    <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time)</label><br>
-                    <input type="time" id="issueTime" name="issueTime">
-                </div>
-
-                <div class="form-group">
-                    <label for="issueLocation" data-lang="issueLocation">Please indicate where the issue occurred*</label><br>
-                    <select id="issueLocation" name="issueLocation" required>
-                        <option value="" disabled selected data-lang="choose">Choose</option>
-                        <option value="Turkey" data-lang="Turkey">Turkey</option>
-                        <option value="Netherlands" data-lang="Netherlands">Netherlands</option>
-                        <option value="Germany" data-lang="Germany">Germany</option>
-                        <option value="France" data-lang="France">France</option>
-                        <option value="Spain" data-lang="Spain">Spain</option>
-                        <option value="United Kingdom" data-lang="UK">United Kingdom</option>
-                        <option value="US" data-lang="US">US</option>
-                        <option value="Other" data-lang="other">Other</option>
-                    </select>
-                    <input type="text" id="otherLocation" name="otherLocation" class="hidden" placeholder="Please specify">
-                </div>
-
-                <div class="form-group">
-                    <label for="attachment" data-lang="attachment">Please attach any supporting evidence documents (screenshots, etc.) that support your claims, if available.</label> <br><br>
-                    <input type="file" id="attachment" name="attachment" multiple>
-                </div><br>
-
-                <div class="form-group">
-                    <label data-lang="introduce">Would you like to introduce yourself?</label>
-                    <div>
-                        <input type="radio" id="introduceYes" name="introduce" value="yes" required>
-                        <label for="introduceYes" data-lang="introduceYes">Yes</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="introduceNo" name="introduce" value="no" required>
-                        <label for="introduceNo" data-lang="introduceNo">No</label>
-                    </div>
-                </div>
-
-                <div id="personalInfo" class="hidden">
-                    <div class="form-group">
-                        <label for="fullName" data-lang="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName">
-                    </div>
-                    <div class="form-group">
-                        <label for="email" data-lang="email">Email *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="gsm" data-lang="gsm">GSM</label>
-                        <input type="tel" id="gsm" name="gsm">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="relationship" data-lang="relationship">Your relationship with the company</label><br>
-                    <select id="relationship" name="relationship">
-                          <option value="" disabled selected data-lang="choose">Choose</option>
-                        <option value="" data-lang="noDeclaration">I don't want to declare</option>
-                        <option value="currentEmployee" data-lang="currentEmployee">Current Employee</option>
-                        <option value="formerEmployee" data-lang="formerEmployee">Former Employee</option>
-                        <option value="supplier" data-lang="supplier">Supplier</option>
-                        <option value="franchisee" data-lang="franchisee">Franchisee</option>
-                        <option value="contractor" data-lang="contractor">Contractor</option>
-                        <option value="subcontractor" data-lang="subcontractor">Sub-Contractor</option>
-                        <option value="otherrelation" data-lang="otherrelation">Other</option>
-                    </select>
-                    <input type="text" id="otherrelationtext" name="otherrelationtext" class="hidden" placeholder="Please specify">
-                </div>
-
-                <div class="form-group">
-                    <label id="securityQuestionLabel" for="securityQuestion" data-lang="securityQuestion">Gizli Soru (Bilet durumu takibi için gereklidir)</label>
-<select id="securityQuestion" name="securityQuestion">
-    <option value="" disabled selected data-lang="choose">Seçiniz</option>
-    <option value="firstPet" data-lang="firstPet">İlk evcil hayvanınızın adı nedir?</option>
-    <option value="motherMaiden" data-lang="motherMaiden">Annenizin kızlık soyadı nedir?</option>
-    <option value="firstSchool" data-lang="firstSchool">İlkokulunuzun adı nedir?</option>
-    <option value="favoriteTeacher" data-lang="favoriteTeacher">En sevdiğiniz öğretmenin adı nedir?</option>
-    <option value="birthCity" data-lang="birthCity">Hangi şehirde doğdunuz?</option>
-</select>
-<input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your Answer">
-<p id="securityWarning" class="hidden" data-lang="securityWarning">Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız.</p>
-
-                </div>
-
-            </div>
-            
-            <button type="submit" data-lang="submit" id="submitBtn">Submit</button>
-        </form>
-        
-        <div id="warning" class="hidden">
-            <p data-lang="warning">You cannot proceed without agreeing to the Terms and Conditions.</p>
-        </div>
-        
-        <div id="loading" class="hidden">
-            <img src="loading.gif" alt="Loading...">
-        </div>
-
-        <div id="successMessage" class="hidden" data-lang="successMessage">
-            Your report has been successfully submitted. Thank you! <br><br>
-            <button id="homeButton">Go to Home Page</button>
-        </div>
+        <h1 data-lang="welcomeTitle">Welcome</h1>
+        <button id="reportBtn" data-lang="reportBtn">Report an Incident</button>
+        <button id="queryBtn" data-lang="queryBtn">Query an Incident</button>
     </div>
 
-    <div class="faq-container">
-        <h2 id="faqTitle" data-lang="faqTitle">FAQ</h2>
-        <button class="faq-question" id="q1" data-lang="q1">What is Getir Speak Up?</button>
-        <div class="faq-answer" id="a1" data-lang="a1">It is a 24/7 support line where Getir employees can share "ethical misconduct" they have observed or experienced and express their concerns. Reports received are directed to the Getir Ethics and Compliance Executive on the same day, and an investigation is initiated as soon as possible.</div>
-        <button class="faq-question" id="q2" data-lang="q2">Which issues are regarded as ethical claims?</button>
-        <div class="faq-answer" id="a2" data-lang="a2">Employees can notify any issue contradicting Getir’s culture, ethical values, professional standards and applicable law. In this context, it is possible to report various issues such as data leak, bribery and corruption, conflicts of interest, confidential information breaches, inappropriate expense reporting, misuse of company resources for personal gain, discrimination, mobbing, anti-competitive behaviors, and violations of the company's ethical culture.</div>
-        <button class="faq-question" id="q3" data-lang="q3">Do I have to reveal my identity while reporting?</button>
-        <div class="faq-answer" id="a3" data-lang="a3">You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Ethics and Compliance Executive will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals.</div>
-        <button class="faq-question" id="q4" data-lang="q4">Will there be any negative consequences for me after I report an issue?</button>
-        <div class="faq-answer" id="a4" data-lang="a4">Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable.</div>
-    </div>
+    <script>
+        document.getElementById('reportBtn').addEventListener('click', function() {
+            window.location.href = 'new_home.html';
+        });
 
-    <script src="script.js"></script>
+        document.getElementById('queryBtn').addEventListener('click', function() {
+            window.location.href = 'query.html';
+        });
+
+        document.getElementById('language').addEventListener('change', function() {
+            const lang = this.value;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.innerHTML = translations[lang][el.getAttribute('data-lang')];
+            });
+        });
+
+        const translations = {
+            en: {
+                selectLanguage: "Select Language",
+                welcomeTitle: "Welcome",
+                reportBtn: "Report an Incident",
+                queryBtn: "Query an Incident"
+            },
+            tr: {
+                selectLanguage: "Dil Seçiniz",
+                welcomeTitle: "Hoşgeldiniz",
+                reportBtn: "Bir Olay Bildirin",
+                queryBtn: "Olay Sorgulama"
+            }
+        };
+    </script>
 </body>
 </html>

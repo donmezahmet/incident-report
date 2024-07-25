@@ -126,7 +126,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                         homeButton.id = 'homeButton';
                         homeButton.textContent = translations[language].goToHomePage;
                         homeButton.onclick = function() {
-                            window.location.href = 'index.html';
+                            window.location.href = 'new_home.html';
                         };
 
                         document.getElementById('successMessage').appendChild(homeButton);
