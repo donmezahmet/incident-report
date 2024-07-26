@@ -528,7 +528,7 @@ const translations = {
         otherrelation: "Diğer",
         startDate: "Başlangıç Tarihi",
         endDate: "Bitiş Tarihi",
-        securityQuestion: "Gizli Soru (Bilet durumu takibi için gereklidir)",
+        securityQuestion: "Gizli Soru Bildirim durumu takibi için gereklidir)",
         firstPet: "İlk evcil hayvanınızın adı nedir?",
         motherMaiden: "Annenizin kızlık soyadı nedir?",
         firstSchool: "İlkokulunuzun adı nedir?",
