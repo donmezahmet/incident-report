@@ -6,6 +6,16 @@
     <title>Query an Incident</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="query_styles.css">
+    <style>
+        .result-message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -42,6 +52,7 @@
 
             <button type="submit" data-lang="submitBtn">Submit</button>
         </form>
+        <div id="resultMessage" class="result-message"></div>
     </div>
 
     <script>
@@ -80,6 +91,35 @@
                 submitBtn: "Gönder"
             }
         };
+
+        document.getElementById('queryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const ticketNumber = document.getElementById('ticketNumber').value;
+            const securityQuestion = document.getElementById('securityQuestion').value;
+            const securityAnswer = document.getElementById('securityAnswer').value;
+
+            fetch(`https://script.google.com/macros/s/AKfycbyzPaTcXFrE6P1sA6Ru2Vu4Bm1jnOb_tmdpT0ZK0p9Qkg1CNtdv3d1WsE0FvvRg0S_H/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultMessage = document.getElementById('resultMessage');
+                    if (data.status === 'success') {
+                        resultMessage.innerText = `Your ticket (number: ${ticketNumber}) is currently in the "${data.ticketStatus}" status.`;
+                    } else {
+                        resultMessage.innerHTML = `Sorry, there seems to be an error with the information you provided. Please check and try again.`;
+                        resultMessage.classList.add('error-message');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const resultMessage = document.getElementById('resultMessage');
+                    resultMessage.innerText = 'An error occurred while querying the incident.';
+                    resultMessage.classList.add('error-message');
+                });
+        });
     </script>
 </body>
 </html>
+
+
+

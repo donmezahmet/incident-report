@@ -103,7 +103,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
 
             Promise.all(uploadPromises).then(() => {
                 // Verileri Google Sheets'e gönder
-                fetch('https://script.google.com/macros/s/AKfycby06EXgg78wSEjYVFjCJbF4qPAseXTxy9SLJ4s3eEtcpGNsSOn__9JAJ9MZwIW-rqnq/exec?' + new URLSearchParams(formData), {
+                fetch('https://script.google.com/macros/s/AKfycbzO1llwXKMGoSKjYS8p8vLhIlkhzvbByHF1HquX4yQjCIKCxdFrhJLxamVaoENYCgen/exec?' + new URLSearchParams(formData), {
                     method: 'GET'
                 })
                 .then(response => response.json())
@@ -147,7 +147,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             });
         } else {
             // Dosya yoksa sadece form verilerini gönder
-            fetch('https://script.google.com/macros/s/AKfycby06EXgg78wSEjYVFjCJbF4qPAseXTxy9SLJ4s3eEtcpGNsSOn__9JAJ9MZwIW-rqnq/exec?' + new URLSearchParams(formData), {
+            fetch('https://script.google.com/macros/s/AKfycbzO1llwXKMGoSKjYS8p8vLhIlkhzvbByHF1HquX4yQjCIKCxdFrhJLxamVaoENYCgen/exec?' + new URLSearchParams(formData), {
                 method: 'GET'
             })
             .then(response => response.json())
@@ -170,7 +170,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                     homeButton.id = 'homeButton';
                     homeButton.textContent = translations[language].goToHomePage;
                     homeButton.onclick = function() {
-                        window.location.href = 'index.html';
+                        window.location.href = 'new_home.html';
                     };
 
                     document.getElementById('successMessage').appendChild(homeButton);
@@ -385,7 +385,7 @@ document.getElementById('relationship').addEventListener('change', function() {
 
 // Add event listener for home button
 document.getElementById('homeButton').addEventListener('click', function() {
-    window.location.href = 'index.html';
+    window.location.href = 'new_home.html';
 });
 
 const translations = {
