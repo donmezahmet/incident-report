@@ -66,9 +66,9 @@
                 </div>
 
                 <div class="form-group hidden" id="dateRangeQuestions">
-                    <label for="startDate" data-lang="startDate">Start Date</label><br>
+                    <label for="startDate" data-lang="startDate">Start Date*</label><br>
                     <input type="date" id="startDate" name="startDate"><br>
-                    <label for="endDate" data-lang="endDate">End Date</label><br>
+                    <label for="endDate" data-lang="endDate">End Date*</label><br>
                     <input type="date" id="endDate" name="endDate">
                 </div>
 
@@ -112,7 +112,7 @@
 
                 <div id="personalInfo" class="hidden">
                     <div class="form-group">
-                        <label for="fullName" data-lang="fullName">Full Name</label>
+                        <label for="fullName" data-lang="fullName">Full Name*</label>
                         <input type="text" id="fullName" name="fullName">
                     </div>
                     <div class="form-group">
@@ -142,19 +142,18 @@
                 </div>
 
                 <div class="form-group">
-    <label id="securityQuestionLabel" for="securityQuestion" data-lang="securityQuestion">Security Question (Required for ticket status tracking)</label>
-    <select id="securityQuestion" name="securityQuestion">
-        <option value="" disabled selected data-lang="choose">Choose</option>
-        <option value="firstPet" data-lang="firstPet">What was the name of your first pet?</option>
-        <option value="motherMaiden" data-lang="motherMaiden">What is your mother's maiden name?</option>
-        <option value="firstSchool" data-lang="firstSchool">What was the name of your first school?</option>
-        <option value="favoriteTeacher" data-lang="favoriteTeacher">Who was your favorite teacher?</option>
-        <option value="birthCity" data-lang="birthCity">In which city were you born?</option>
-    </select>
-    <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your Answer">
-    <p id="securityWarning" class="hidden" data-lang="securityWarning">This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report.</p>
-</div>
-
+                    <label id="securityQuestionLabel" for="securityQuestion" data-lang="securityQuestion">Security Question (Required for ticket status tracking)</label>
+                    <select id="securityQuestion" name="securityQuestion">
+                        <option value="" disabled selected data-lang="choose">Choose</option>
+                        <option value="movie" data-lang="movie">What is your favorite movie quote?</option>
+                        <option value="concert" data-lang="concert">What was the first concert you went to?</option>
+                        <option value="toy" data-lang="toy">What was your favorite toy when you were a child?</option>
+                        <option value="cinema" data-lang="cinema">What was the first movie you saw in the cinema?</option>
+                        <option value="secQue" data-lang="secQue">What is your favorite security question?</option>
+                    </select>
+                    <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your Answer">
+                    <p id="securityWarning" class="hidden" data-lang="securityWarning">This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report.</p>
+                </div>
             </div>
             
             <button type="submit" data-lang="submit" id="submitBtn">Submit</button>

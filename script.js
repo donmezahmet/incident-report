@@ -126,7 +126,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                         homeButton.id = 'homeButton';
                         homeButton.textContent = translations[language].goToHomePage;
                         homeButton.onclick = function() {
-                            window.location.href = 'new_home.html';
+                            window.location.href = 'index.html';
                         };
 
                         document.getElementById('successMessage').appendChild(homeButton);
@@ -170,7 +170,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                     homeButton.id = 'homeButton';
                     homeButton.textContent = translations[language].goToHomePage;
                     homeButton.onclick = function() {
-                        window.location.href = 'new_home.html';
+                        window.location.href = 'index.html';
                     };
 
                     document.getElementById('successMessage').appendChild(homeButton);
@@ -275,6 +275,10 @@ document.getElementById('ongoing').addEventListener('change', function() {
 
 // Hata mesajını sayfa yüklendiğinde ekle
 window.addEventListener('DOMContentLoaded', (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'en';
+    document.getElementById('language').value = lang;
+    updateLanguage(lang);
     addErrorMessage();
     const selectElement = document.getElementById('relationship');
     if (selectElement.value === "") {
@@ -302,6 +306,10 @@ function addErrorMessage() {
 // Dil değiştirme
 document.getElementById('language').addEventListener('change', function() {
     const lang = this.value;
+    updateLanguage(lang);
+});
+
+function updateLanguage(lang) {
     document.querySelectorAll('[data-lang]').forEach(el => {
         el.innerHTML = translations[lang][el.getAttribute('data-lang')];
     });
@@ -323,11 +331,11 @@ document.getElementById('language').addEventListener('change', function() {
     const securityQuestionSelect = document.getElementById('securityQuestion');
     securityQuestionSelect.innerHTML = `
         <option value="" disabled selected>${translations[lang].choose}</option>
-        <option value="firstPet">${translations[lang].firstPet}</option>
-        <option value="motherMaiden">${translations[lang].motherMaiden}</option>
-        <option value="firstSchool">${translations[lang].firstSchool}</option>
-        <option value="favoriteTeacher">${translations[lang].favoriteTeacher}</option>
-        <option value="birthCity">${translations[lang].birthCity}</option>
+        <option value="movie">${translations[lang].movie}</option>
+        <option value="concert">${translations[lang].concert}</option>
+        <option value="toy">${translations[lang].toy}</option>
+        <option value="cinema">${translations[lang].cinema}</option>
+        <option value="secQue">${translations[lang].secQue}</option>
     `;
     
     // Placeholderları güncelle
@@ -342,7 +350,7 @@ document.getElementById('language').addEventListener('change', function() {
 
     // Hata mesajını güncelle
     addErrorMessage();
-});
+}
 
 // Relationship dropdown değiştiğinde diğer seçeneği göster
 document.getElementById('relationship').addEventListener('change', function() {
@@ -385,7 +393,7 @@ document.getElementById('relationship').addEventListener('change', function() {
 
 // Add event listener for home button
 document.getElementById('homeButton').addEventListener('click', function() {
-    window.location.href = 'new_home.html';
+    window.location.href = 'index.html';
 });
 
 const translations = {
@@ -404,7 +412,7 @@ const translations = {
         introduce: "Would you like to introduce yourself?",
         introduceYes: "Yes",
         introduceNo: "No",
-        fullName: "Full Name",
+        fullName: "Full Name*",
         email: "Email *",
         gsm: "GSM",
         relationship: "Your relationship with the company",
@@ -452,14 +460,14 @@ const translations = {
         yes: "Yes",
         no: "No",
         otherrelation: "Other",
-        startDate: "Start Date",
-        endDate: "End Date",
+        startDate: "Start Date*",
+        endDate: "End Date*",
         securityQuestion: "Security Question (Required for ticket status tracking)",
-        firstPet: "What is the name of your first pet?",
-        motherMaiden: "What is your mother's maiden name?",
-        firstSchool: "What is the name of your first school?",
-        favoriteTeacher: "What is the name of your favorite teacher?",
-        birthCity: "In which city were you born?",
+        movie: "What is your favorite movie quote?",
+        concert: "What is your mother's maiden name?",
+        toy: "What was your favorite toy when you were a child?",
+        cinema: "What was the first movie you saw in the cinema?",
+        secQue: "What is your favorite security question?",
         securityAnswerPlaceholder: "Your Answer",
         errorMessage: "This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report."
     },
@@ -478,7 +486,7 @@ const translations = {
         introduce: "Kendinizi tanıtmak ister misiniz?",
         introduceYes: "Evet",
         introduceNo: "Hayır",
-        fullName: "Ad - Soyad",
+        fullName: "Ad - Soyad*",
         email: "Email*",
         gsm: "GSM",
         relationship: "Şirketle olan ilişkiniz",
@@ -489,8 +497,8 @@ const translations = {
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
         successTitle: "Bildiriminiz İçin Teşekkürler!",
         successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
-        ticketNumber: "Bilet numaranız ",
-        checkStatus: "Bu numara ile biletinizin durumunu kontrol edebilirsiniz.",
+        ticketNumber: "Bildirim numaranız ",
+        checkStatus: "Bu numara ile bildiriminizin guncel durumunu kontrol edebilirsiniz.",
         faqTitle: "Sıkça Sorulan Sorular",
         q1: "Getir Speak Up nedir?",
         a1: "Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir Etik ve Uyum Yöneticisine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.",
@@ -526,14 +534,14 @@ const translations = {
         yes: "Evet",
         no: "Hayır",
         otherrelation: "Diğer",
-        startDate: "Başlangıç Tarihi",
-        endDate: "Bitiş Tarihi",
+        startDate: "Başlangıç Tarihi*",
+        endDate: "Bitiş Tarihi*",
         securityQuestion: "Gizli Soru Bildirim durumu takibi için gereklidir)",
-        firstPet: "İlk evcil hayvanınızın adı nedir?",
-        motherMaiden: "Annenizin kızlık soyadı nedir?",
-        firstSchool: "İlkokulunuzun adı nedir?",
-        favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
-        birthCity: "Hangi şehirde doğdunuz?",
+        movie: "En sevdiğiniz film repliği nedir?",
+        concert: "Gittiğiniz ilk konser neydi?",
+        toy: "Çocukken en sevdiğiniz oyuncak neydi?",
+        cinema: "Sinemada izlediğiniz ilk film neydi?",
+        secQue: "En sevdiğiniz güvenlik sorusu nedir?",
         securityAnswerPlaceholder: "Cevabınız",
         errorMessage: "Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız."
     }

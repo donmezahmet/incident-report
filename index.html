@@ -18,16 +18,18 @@
         </div>
         <h1 data-lang="welcomeTitle">Welcome</h1>
         <button id="reportBtn" data-lang="reportBtn">Report an Incident</button>
-        <button id="queryBtn" data-lang="queryBtn">Query an Incident</button>
+        <button id="queryBtn" data-lang="queryBtn">Check Report Status</button>
     </div>
 
     <script>
         document.getElementById('reportBtn').addEventListener('click', function() {
-            window.location.href = 'new_home.html';
+            const lang = document.getElementById('language').value;
+            window.location.href = `new_home.html?lang=${lang}`;
         });
 
         document.getElementById('queryBtn').addEventListener('click', function() {
-            window.location.href = 'query.html';
+            const lang = document.getElementById('language').value;
+            window.location.href = `query.html?lang=${lang}`;
         });
 
         document.getElementById('language').addEventListener('change', function() {
@@ -42,13 +44,13 @@
                 selectLanguage: "Select Language",
                 welcomeTitle: "Welcome",
                 reportBtn: "Report an Incident",
-                queryBtn: "Query an Incident"
+                queryBtn: "Check Report Status"
             },
             tr: {
                 selectLanguage: "Dil Seçiniz",
                 welcomeTitle: "Hoşgeldiniz",
                 reportBtn: "Bir Olay Bildirin",
-                queryBtn: "Olay Sorgulama"
+                queryBtn: "Olay Durumu Sorgulama"
             }
         };
     </script>
