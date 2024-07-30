@@ -37,11 +37,11 @@
             <div class="form-group">
                 <label for="securityQuestion" data-lang="securityQuestion">Security Question</label>
                 <select id="securityQuestion" name="securityQuestion" required>
-                    <option value="firstPet" data-lang="firstPet">What was the name of your first pet?</option>
-                    <option value="motherMaiden" data-lang="motherMaiden">What is your mother's maiden name?</option>
-                    <option value="firstSchool" data-lang="firstSchool">What was the name of your first school?</option>
-                    <option value="favoriteTeacher" data-lang="favoriteTeacher">Who was your favorite teacher?</option>
-                    <option value="birthCity" data-lang="birthCity">In which city were you born?</option>
+                    <option value="movie" data-lang="movie">What is your favorite movie quote?</option>
+                    <option value="concert" data-lang="concert">What was the first concert you went to?</option>
+                    <option value="toy" data-lang="toy">What was your favorite toy when you were a child?</option>
+                    <option value="cinema" data-lang="cinema">What was the first movie you saw in the cinema?</option>
+                    <option value="secQue" data-lang="secQue">What is your favorite security question?</option>
                 </select>
             </div>
             
@@ -56,12 +56,24 @@
     </div>
 
     <script>
+        // Load initial language from URL params
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || 'en';
+            document.getElementById('language').value = lang;
+            setLanguage(lang);
+        });
+
         document.getElementById('language').addEventListener('change', function() {
             const lang = this.value;
+            setLanguage(lang);
+        });
+
+        function setLanguage(lang) {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.innerHTML = translations[lang][el.getAttribute('data-lang')];
             });
-        });
+        }
 
         const translations = {
             en: {
@@ -69,26 +81,32 @@
                 queryTitle: "Query an Incident",
                 ticketNumber: "Ticket Number",
                 securityQuestion: "Security Question",
-                firstPet: "What was the name of your first pet?",
-                motherMaiden: "What is your mother's maiden name?",
-                firstSchool: "What was the name of your first school?",
-                favoriteTeacher: "Who was your favorite teacher?",
-                birthCity: "In which city were you born?",
+                movie: "What is your favorite movie quote?",
+                concert: "What was the first concert you went to?",
+                toy: "What was your favorite toy when you were a child?",
+                cinema: "What was the first movie you saw in the cinema?",
+                secQue: "What is your favorite security question?",
                 securityAnswer: "Your Answer",
-                submitBtn: "Submit"
+                submitBtn: "Submit",
+                statusMessage: "Your ticket ({ticketNumber}) is currently in the \"{ticketStatus}\" status.",
+                errorMessage: "Sorry, there seems to be an error with the information you provided. Please check and try again.",
+                queryError: "An error occurred while querying the incident."
             },
             tr: {
                 selectLanguage: "Dil Seçiniz",
                 queryTitle: "Bildirim Sorgulama",
                 ticketNumber: "Bildirim Numarası",
                 securityQuestion: "Gizli Soru",
-                firstPet: "İlk evcil hayvanınızın adı nedir?",
-                motherMaiden: "Annenizin kızlık soyadı nedir?",
-                firstSchool: "İlkokulunuzun adı nedir?",
-                favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
-                birthCity: "Hangi şehirde doğdunuz?",
+                movie: "En sevdiğiniz film repliği nedir?",
+                concert: "Gittiğiniz ilk konser neydi?",
+                toy: "Çocukken en sevdiğiniz oyuncak neydi?",
+                cinema: "Sinemada izlediğiniz ilk film neydi?",
+                secQue: "En sevdiğiniz güvenlik sorusu nedir?",
                 securityAnswer: "Cevabınız",
-                submitBtn: "Gönder"
+                submitBtn: "Gönder",
+                statusMessage: "{ticketNumber} numarali bildiriminiz şu anda \"{ticketStatus}\" durumundadır.",
+                errorMessage: "Üzgünüz, verdiğiniz bilgilerde bir hata var gibi görünüyor. Lütfen kontrol edip tekrar deneyin.",
+                queryError: "Bildirim sorgulanırken bir hata oluştu."
             }
         };
 
@@ -98,28 +116,27 @@
             const ticketNumber = document.getElementById('ticketNumber').value;
             const securityQuestion = document.getElementById('securityQuestion').value;
             const securityAnswer = document.getElementById('securityAnswer').value;
+            const lang = document.getElementById('language').value;
 
             fetch(`https://script.google.com/macros/s/AKfycbyzPaTcXFrE6P1sA6Ru2Vu4Bm1jnOb_tmdpT0ZK0p9Qkg1CNtdv3d1WsE0FvvRg0S_H/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultMessage = document.getElementById('resultMessage');
                     if (data.status === 'success') {
-                        resultMessage.innerText = `Your ticket (number: ${ticketNumber}) is currently in the "${data.ticketStatus}" status.`;
+                        resultMessage.innerText = translations[lang].statusMessage.replace("{ticketNumber}", ticketNumber).replace("{ticketStatus}", data.ticketStatus);
                     } else {
-                        resultMessage.innerHTML = `Sorry, there seems to be an error with the information you provided. Please check and try again.`;
+                        resultMessage.innerHTML = translations[lang].errorMessage;
                         resultMessage.classList.add('error-message');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     const resultMessage = document.getElementById('resultMessage');
-                    resultMessage.innerText = 'An error occurred while querying the incident.';
+                    resultMessage.innerText = translations[lang].queryError;
                     resultMessage.classList.add('error-message');
                 });
         });
+
     </script>
 </body>
 </html>
-
-
-
