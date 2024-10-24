@@ -15,6 +15,10 @@
         .error-message {
             color: red;
         }
+        .loading {
+            display: none; /* Başlangıçta gizli */
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +56,9 @@
 
             <button type="submit" data-lang="submitBtn">Submit</button>
         </form>
+        <div id="loading" class="loading">
+            <img src="loading.gif" alt="Loading..."> <!-- Yükleme GIF'i -->
+        </div>
         <div id="resultMessage" class="result-message"></div>
     </div>
 
@@ -98,13 +105,20 @@
             const ticketNumber = document.getElementById('ticketNumber').value;
             const securityQuestion = document.getElementById('securityQuestion').value;
             const securityAnswer = document.getElementById('securityAnswer').value;
+            // Yükleme GIF'ini göster
+            document.getElementById('loading').style.display = 'block';
 
-            fetch(`https://script.google.com/macros/s/AKfycbyzPaTcXFrE6P1sA6Ru2Vu4Bm1jnOb_tmdpT0ZK0p9Qkg1CNtdv3d1WsE0FvvRg0S_H/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
+            fetch(`https://script.google.com/macros/s/AKfycbydSF-BLtyXMmsMAHGI37S_VTu5ImmdgViaOniqE-Y0R7dQNXygh1YriLtKDlOZVxxm/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
                 .then(response => response.json())
                 .then(data => {
                     const resultMessage = document.getElementById('resultMessage');
+                    // Yükleme GIF'ini gizle
+                    document.getElementById('loading').style.display = 'none';
+
                     if (data.status === 'success') {
-                        resultMessage.innerText = `Your ticket (number: ${ticketNumber}) is currently in the "${data.ticketStatus}" status.`;
+                        // Kullanıcı seçimine göre mesajı ayarlayın
+                        const lang = document.getElementById('language').value; // Seçilen dili al
+                        resultMessage.innerHTML = data.message[lang].replace(/\n/g, '<br>'); // Mesajı güncelle
                     } else {
                         resultMessage.innerHTML = `Sorry, there seems to be an error with the information you provided. Please check and try again.`;
                         resultMessage.classList.add('error-message');
@@ -120,6 +134,3 @@
     </script>
 </body>
 </html>
-
-
-

@@ -62,6 +62,12 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
         formData.append('securityAnswer', securityAnswer);
         formData.append('ticketNumber', ticketNumber);
 
+        // Anonim kalmayı seçerse e-posta adresini ekle
+        if (introduce === 'no') {
+            const contactEmail = document.getElementById('contactEmail').value || '';
+            formData.append('contactEmail', contactEmail);
+        }
+
         // Dosya yükleme işlemi
         const attachments = document.getElementById('attachment').files;
 
@@ -94,7 +100,7 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
                             console.error('Error uploading file:', error);
                             reject();
                         });
-                    }
+                    };
                     reader.readAsDataURL(attachment);
                 });
 
@@ -103,8 +109,10 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
 
             Promise.all(uploadPromises).then(() => {
                 // Verileri Google Sheets'e gönder
-                fetch('https://script.google.com/macros/s/AKfycbzO1llwXKMGoSKjYS8p8vLhIlkhzvbByHF1HquX4yQjCIKCxdFrhJLxamVaoENYCgen/exec?' + new URLSearchParams(formData), {
-                    method: 'GET'
+                fetch('https://script.google.com/macros/s/AKfycbzU_ChlJFnM1ifaKcUy7-a155J6ia5QlRkxl1alq6yybSbvGkY6o1CRsuUF8OZyJQ/exec?' + new URLSearchParams(formData), {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -147,8 +155,10 @@ document.getElementById('incidentForm').addEventListener('submit', function(even
             });
         } else {
             // Dosya yoksa sadece form verilerini gönder
-            fetch('https://script.google.com/macros/s/AKfycbzO1llwXKMGoSKjYS8p8vLhIlkhzvbByHF1HquX4yQjCIKCxdFrhJLxamVaoENYCgen/exec?' + new URLSearchParams(formData), {
-                method: 'GET'
+            fetch('https://script.google.com/macros/s/AKfycbzU_ChlJFnM1ifaKcUy7-a155J6ia5QlRkxl1alq6yybSbvGkY6o1CRsuUF8OZyJQ/exec?' + new URLSearchParams(formData), {
+                method: 'POST',
+                mode: 'cors',
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
@@ -212,11 +222,15 @@ document.getElementById('issueLocation').addEventListener('change', function() {
 document.getElementById('introduceYes').addEventListener('change', function() {
     document.getElementById('personalInfo').classList.remove('hidden');
     document.getElementById('email').setAttribute('required', 'required');
+    document.getElementById('contactEmail').classList.add('hidden');
+    document.getElementById('anonymousWarning').classList.add('hidden');
 });
 
 document.getElementById('introduceNo').addEventListener('change', function() {
     document.getElementById('personalInfo').classList.add('hidden');
     document.getElementById('email').removeAttribute('required');
+    document.getElementById('contactEmail').classList.remove('hidden');
+    document.getElementById('anonymousWarning').classList.remove('hidden');
 });
 
 document.getElementById('incidentDuration').addEventListener('change', function() {
@@ -316,6 +330,7 @@ document.getElementById('language').addEventListener('change', function() {
     document.getElementById('a3').textContent = translations[lang].a3;
     document.getElementById('q4').textContent = translations[lang].q4;
     document.getElementById('a4').textContent = translations[lang].a4;
+   // document.getElementById('anonymousWarning').textContent = translations[lang].anonymousWarning;
     document.getElementById('securityQuestionLabel').textContent = translations[lang].securityQuestion;
     document.getElementById('securityAnswer').placeholder = translations[lang].securityAnswerPlaceholder;
 
@@ -328,12 +343,20 @@ document.getElementById('language').addEventListener('change', function() {
         <option value="firstSchool">${translations[lang].firstSchool}</option>
         <option value="favoriteTeacher">${translations[lang].favoriteTeacher}</option>
         <option value="birthCity">${translations[lang].birthCity}</option>
+
+
     `;
     
+      const anonymousWarningElement = document.getElementById('anonymousWarning');
+    anonymousWarningElement.querySelector('p').innerHTML = translations[lang].anonymousWarning;
+    anonymousWarningElement.querySelector('p').style.color = 'red'; // Rengi kırmızı olarak ayarla
+    anonymousWarningElement.querySelector('p').style.fontStyle = 'italic'; // İtalik yap
+
     // Placeholderları güncelle
     document.getElementById('issueDetails').placeholder = translations[lang].issueDetailsPlaceholder;
     document.getElementById('involvedParties').placeholder = translations[lang].involvedPartiesPlaceholder;
     document.getElementById('otherLocation').placeholder = translations[lang].otherPlaceholder;
+    document.getElementById('contactEmail').placeholder = translations[lang].contactEmailPlaceholder; // Yeni eklenen satır
     const relationshipSelect = document.getElementById('relationship');
     relationshipSelect.querySelector('option[value=""]').textContent = translations[lang].choose;
     relationshipSelect.querySelector('option[value="otherrelation"]').textContent = translations[lang].otherrelation;
@@ -423,11 +446,12 @@ const translations = {
         q2: "Which issues are regarded as ethical claims?",
         a2: "Employees can notify any issue contradicting Getir’s culture, ethical values, professional standards and applicable law. In this context, it is possible to report various issues such as data leak, bribery and corruption, conflicts of interest, confidential information breaches, inappropriate expense reporting, misuse of company resources for personal gain, discrimination, mobbing, anti-competitive behaviors, and violations of the company's ethical culture.",
         q3: "Do I have to reveal my identity while reporting?",
-        a3: "You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Ethics and Compliance Executive will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals. ",
+        a3: "You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Ethics and Compliance Executive will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals.",
         q4: "Will there be any negative consequences for me after I report an issue?",
-        a4: "Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable. ",
+        a4: "Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable.",
         issueDetailsPlaceholder: "Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know.",
         involvedPartiesPlaceholder: "Please specify the identity of the person(s) engaged in this behavior.",
+        contactEmailPlaceholder: "Your Email (optional)",
         supplier: "Supplier",
         franchisee: "Franchisee",
         contractor: "Contractor",
@@ -461,7 +485,9 @@ const translations = {
         favoriteTeacher: "What is the name of your favorite teacher?",
         birthCity: "In which city were you born?",
         securityAnswerPlaceholder: "Your Answer",
+        anonymousWarning: "You chose to remain anonymous. However, if we have additional questions regarding your report, we currently have no contact information to reach you. If further information is needed for your report, we won't be able to reach you, and your report may not be properly evaluated. It may be beneficial for you to provide an email address without revealing your identity. If you would like to do this, please enter your email address below. Otherwise, please check the status of your report using the ticket number we provide, and see if there is any additional information needed",
         errorMessage: "This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report."
+        
     },
     tr: {
         selectLanguage: "Dil Seçiniz",
@@ -481,6 +507,7 @@ const translations = {
         fullName: "Ad - Soyad",
         email: "Email*",
         gsm: "GSM",
+        contactEmailPlaceholder: "E-posta Adresiniz (isteğe bağlı)",
         relationship: "Şirketle olan ilişkiniz",
         currentEmployee: "Mevcut Çalışan",
         formerEmployee: "Eski Çalışan",
@@ -535,6 +562,8 @@ const translations = {
         favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
         birthCity: "Hangi şehirde doğdunuz?",
         securityAnswerPlaceholder: "Cevabınız",
+         anonymousWarning: "Anonim kalmayı tercih ettiniz. Ancak, bildiriminizle ilgili ek sorularımız olursa, sizinle iletişim kuracak herhangi bir iletişim bilgisine sahip değiliz. Eğer bildiriminiz için ek bilgiye ihtiyaç duyulursa, sizinle iletişim kuramayacağız ve bildiriminiz düzgün bir şekilde değerlendirilemeyebilir. Kimliğinizi açığa çıkarmadan bir e-posta adresi sağlamanız sizin için faydalı olabilir. Bunu yapmak isterseniz, lütfen aşağıya e-posta adresinizi giriniz. Aksi halde size vereceğimiz bildirim numarası ile bildiriminizin durumunu sorgulayıp ilave bilgi ihtiyacı olup olmadığını kontrol ediniz.",
         errorMessage: "Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız."
+       
     }
 };
