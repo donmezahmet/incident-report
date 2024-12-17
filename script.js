@@ -2,15 +2,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const internalAuditYes = document.getElementById('auditYes');
     const internalAuditNo = document.getElementById('auditNo');
 
-
     // Dil öğesini kontrol et, eğer yoksa varsayılan olarak 'en' olarak ayarla
     const languageElement = document.getElementById('language');
     const language = languageElement ? languageElement.value : 'en';
 
-     // Success message'ı burada kontrol edelim
+    // Success message'ı burada kontrol edelim
     const successMessageElement = document.querySelector('#successMessage');
 
+    // Dil değişikliği işlemleri
+    document.getElementById('trFlag').addEventListener('click', function () {
+        window.location.href = window.location.pathname.replace('new_home.html', 'new_home_tr.html');
+    });
 
+    document.getElementById('enFlag').addEventListener('click', function () {
+        window.location.href = window.location.pathname.replace('new_home_tr.html', 'new_home.html');
+    });
 
     // Form submit işlemi
     document.getElementById('incidentForm').addEventListener('submit', function (event) {
@@ -96,8 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const contactEmail = document.getElementById('contactEmail').value || '';
                 formData.append('contactEmail', contactEmail);
             }
-
-           
 
             // Dosya yükleme işlemi
             const attachments = document.getElementById('attachment').files;
@@ -243,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 // "Introduce" ve "Employee Name" kısmının işleyişi burada...
 
 
@@ -372,14 +377,14 @@ let language = 'en'; // Varsayılan dil İngilizce
      document.getElementById('trFlag').addEventListener('click', function () {
         changeLanguage('tr');
          changeLanguage(language);
-    location.reload(); // Sayfayı yenileyerek dil değişikliğini tamamlarsınız
+    
     });
 
 
   document.getElementById('enFlag').addEventListener('click', function () {
         changeLanguage('en');
          changeLanguage(language);
-    location.reload(); // Sayfayı yenileyerek dil değişikliğini tamamlarsınız
+    
     });
 
 
