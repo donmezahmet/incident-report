@@ -48,7 +48,6 @@ a {
     text-decoration: none;
 }
 
-
 .form-group {
     margin-bottom: 20px;
 }
@@ -95,10 +94,14 @@ button:hover {
     background-color: #155bb5;
 }
 
-.hidden {
-    display: none;
-}
 
+
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
 #warning {
     color: red;
     margin-top: 20px;
@@ -162,10 +165,36 @@ select {
     padding: 10px;
     box-sizing: border-box;
 }
+ .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: right;
+        }
 
-.hidden {
-    display: none;
+        .language-icon {
+            cursor: pointer;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%; /* Yuvarlak yapmak için */
+             object-fit: cover; /* Bayrağın düzgün şekilde görünmesi için */
+        }
+
+        .language-icon img {
+            width: 7%;
+            height: 7%;
+                 border-radius: 50%; /* Yuvarlak yapmak için */
+                 text-align: center;
+        }
+.flag-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin: 0 10px;
 }
+
+
+
 
 .info-icon {
     font-size: 16px;
@@ -192,6 +221,19 @@ select {
 .info-icon:hover::after {
     display: block;
 }
+#employeeNameContainer {
+    display: none !important;  /* Başlangıçta gizle */
+    visibility: hidden !important;
+}
+
+#employeeNameContainer:not(.hidden) {
+    display: block !important;  /* Görünür yap */
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+
+
 
 @media (max-width: 768px) {
     body {

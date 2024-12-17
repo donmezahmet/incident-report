@@ -1,9 +1,26 @@
-.language-selector {
-    position: static;
-    text-align: center;
-    margin-bottom: 20px;
+/* Form elemanlarının boyutlarını eşitleme */
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.container {
-    text-align: center;
+/* Butonların boyutlarını eşitleme */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }

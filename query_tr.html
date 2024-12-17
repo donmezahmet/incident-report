@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Query an Incident</title>
+    <title>Bildirim Sorgulama</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="query_styles.css">
     <style>
@@ -34,6 +34,7 @@
             width: 100%;
             height: 100%;
         }
+
         .container form {
             width: 400px;  /* Genişliği sabitliyoruz */
             margin: 0 auto; /* Ortalamak için */
@@ -52,37 +53,37 @@
                 <img src="eng.png" alt="English">
             </span>
         </div>
-        <h1 data-lang="queryTitle">Query an Incident</h1>
+        <h1 data-lang="queryTitle">Bildirim Sorgulama</h1>
         
         <form id="queryForm">
             <div class="form-group">
-                <label for="ticketNumber" data-lang="ticketNumber">Ticket Number</label>
+                <label for="ticketNumber" data-lang="ticketNumber">Bildirim Numarası</label>
                 <input type="text" id="ticketNumber" name="ticketNumber" required>
             </div>
             
             <div class="form-group">
-                <label for="securityQuestion" data-lang="securityQuestion">Security Question</label>
+                <label for="securityQuestion" data-lang="securityQuestion">Gizli Soru</label>
                 <select id="securityQuestion" name="securityQuestion" required>
-                    <option value="firstPet" data-lang="firstPet">What was the name of your first pet?</option>
-                    <option value="motherMaiden" data-lang="motherMaiden">What is your mother's maiden name?</option>
-                    <option value="firstSchool" data-lang="firstSchool">What was the name of your first school?</option>
-                    <option value="favoriteTeacher" data-lang="favoriteTeacher">Who was your favorite teacher?</option>
-                    <option value="birthCity" data-lang="birthCity">In which city were you born?</option>
+                    <option value="firstPet" data-lang="firstPet">İlk evcil hayvanınızın adı nedir?</option>
+                    <option value="motherMaiden" data-lang="motherMaiden">Annenizin kızlık soyadı nedir?</option>
+                    <option value="firstSchool" data-lang="firstSchool">İlkokulunuzun adı nedir?</option>
+                    <option value="favoriteTeacher" data-lang="favoriteTeacher">En sevdiğiniz öğretmenin adı nedir?</option>
+                    <option value="birthCity" data-lang="birthCity">Hangi şehirde doğdunuz?</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <label for="securityAnswer" data-lang="securityAnswer">Your Answer</label>
+                <label for="securityAnswer" data-lang="securityAnswer">Cevabınız</label>
                 <input type="text" id="securityAnswer" name="securityAnswer" required>
             </div>
 
-            <button type="submit" data-lang="submitBtn">Submit</button>
+            <button type="submit" data-lang="submitBtn">Sorgula</button>
         </form>
         <div id="resultMessage" class="result-message"></div>
     </div>
 
     <script>
-        // Change language based on flag click
+        // Bayrağa tıklayınca dil değişimi
         document.getElementById('trFlag').addEventListener('click', function() {
             changeLanguage('tr');
         });
@@ -91,13 +92,13 @@
             changeLanguage('en');
         });
 
-        // Change language logic
+        // Dil değişimini işleme
         function changeLanguage(lang) {
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.innerHTML = translations[lang][el.getAttribute('data-lang')];
             });
 
-            // Adjust the flag opacity to indicate active language
+            // Bayrak ikonunun görünümünü güncelle
             document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
             document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
         }
@@ -114,7 +115,8 @@
                 favoriteTeacher: "Who was your favorite teacher?",
                 birthCity: "In which city were you born?",
                 securityAnswer: "Your Answer",
-                submitBtn: "Submit"
+                submitBtn: "Submit",
+                resultMessage: "Your ticket (number: {ticketNumber}) is currently in the {ticketStatus} status."
             },
             tr: {
                 selectLanguage: "Dil Seçiniz",
@@ -127,7 +129,8 @@
                 favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
                 birthCity: "Hangi şehirde doğdunuz?",
                 securityAnswer: "Cevabınız",
-                submitBtn: "Gönder"
+                submitBtn: "Gönder",
+                resultMessage: "Bildiriminiz (numara: {ticketNumber}) şu anda {ticketStatus} durumunda."
             }
         };
 
@@ -142,17 +145,25 @@
                 .then(response => response.json())
                 .then(data => {
                     const resultMessage = document.getElementById('resultMessage');
+                    const lang = document.querySelector('html').lang || 'tr';  // Default to Turkish if lang is not set
+
                     if (data.status === 'success') {
-                        resultMessage.innerText = `Your ticket (number: ${ticketNumber}) is currently in the "${data.ticketStatus}" status.`;
+                        resultMessage.innerText = translations[lang].resultMessage
+                            .replace('{ticketNumber}', ticketNumber)
+                            .replace('{ticketStatus}', data.ticketStatus);
                     } else {
-                        resultMessage.innerHTML = `Sorry, there seems to be an error with the information you provided. Please check and try again.`;
+                        resultMessage.innerHTML = translations[lang].resultMessage.replace('{ticketNumber}', ticketNumber);
                         resultMessage.classList.add('error-message');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     const resultMessage = document.getElementById('resultMessage');
-                    resultMessage.innerText = 'An error occurred while querying the incident.';
+                    const lang = document.querySelector('html').lang || 'tr';  // Default to Turkish if lang is not set
+
+                    resultMessage.innerText = lang === 'en'
+                        ? 'An error occurred while querying the incident.'
+                        : 'Bildirim sorgulama sırasında bir hata oluştu.';
                     resultMessage.classList.add('error-message');
                 });
         });

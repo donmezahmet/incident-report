@@ -7,3 +7,24 @@
 .container {
     text-align: center;
 }
+       .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-icon {
+            cursor: pointer;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%; /* Yuvarlak yapmak için */
+             object-fit: cover; /* Bayrağın düzgün şekilde görünmesi için */
+        }
+
+        .language-icon img {
+            width: 10%;
+            height: 10%;
+                 border-radius: 50%; /* Yuvarlak yapmak için */
+        }
+
+

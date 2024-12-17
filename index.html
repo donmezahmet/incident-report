@@ -1,56 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title data-lang="homeTitle">Home</title>  <!-- Buradaki title'ı değiştireceğiz -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="home_styles.css">
 </head>
 <body>
     <div class="container">
         <div class="language-selector">
-            <label for="language" data-lang="selectLanguage">Select Language</label>
-            <select id="language" name="language">
-                <option value="en">English</option>
-                <option value="tr">Türkçe</option>
-            </select>
+            <div>
+                <!-- Türkçe Bayrağı -->
+                <span id="trFlag" class="language-icon">
+                    <img src="tr.png" alt="">
+                </span>
+                <!-- İngilizce Bayrağı -->
+                <span id="enFlag" class="language-icon">
+                    <img src="eng.png" alt="">
+                </span>
+            </div>
         </div>
+        
         <h1 data-lang="welcomeTitle">Welcome</h1>
         <button id="reportBtn" data-lang="reportBtn">Report an Incident</button>
         <button id="queryBtn" data-lang="queryBtn">Query an Incident</button>
     </div>
 
     <script>
-        document.getElementById('reportBtn').addEventListener('click', function() {
-            window.location.href = 'new_home.html';
+        // Bayrağa tıklayınca dil değişimi
+        document.getElementById('trFlag').addEventListener('click', function() {
+            changeLanguage('tr');
         });
 
-        document.getElementById('queryBtn').addEventListener('click', function() {
-            window.location.href = 'query.html';
+        document.getElementById('enFlag').addEventListener('click', function() {
+            changeLanguage('en');
         });
 
-        document.getElementById('language').addEventListener('change', function() {
-            const lang = this.value;
+        // Dil değişimini işleme
+        function changeLanguage(lang) {
+            // Sayfa başlığını güncelle
+            document.querySelector('title').innerHTML = translations[lang]['homeTitle'];
+
+            // Sayfadaki metinleri güncelle
             document.querySelectorAll('[data-lang]').forEach(el => {
                 el.innerHTML = translations[lang][el.getAttribute('data-lang')];
             });
+
+            // Bayrak ikonunun görünümünü güncelle
+            document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
+            document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
+        }
+
+        // Olay bildirim butonuna tıklama
+        document.getElementById('reportBtn').addEventListener('click', function() {
+            const lang = getSelectedLanguage();
+            window.location.href = lang === 'tr' ? 'new_home_tr.html' : 'new_home.html';
         });
+
+        // Olay sorgulama butonuna tıklama
+        document.getElementById('queryBtn').addEventListener('click', function() {
+            const lang = getSelectedLanguage();
+            window.location.href = lang === 'tr' ? 'query_tr.html' : 'query.html';
+        });
+
+        // Dil seçim fonksiyonu
+        function getSelectedLanguage() {
+            const trFlagOpacity = document.getElementById('trFlag').style.opacity;
+            return trFlagOpacity === '1' ? 'tr' : 'en';
+        }
 
         const translations = {
             en: {
+                homeTitle: "Home",
                 selectLanguage: "Select Language",
                 welcomeTitle: "Welcome",
                 reportBtn: "Report an Incident",
-                queryBtn: "Query an Incident"
+                queryBtn: "Query an Incident",
             },
             tr: {
+                homeTitle: "Ana Sayfa",  // Türkçe sayfa başlığı
                 selectLanguage: "Dil Seçiniz",
                 welcomeTitle: "Hoşgeldiniz",
                 reportBtn: "Bir Olay Bildirin",
-                queryBtn: "Olay Sorgulama"
+                queryBtn: "Olay Sorgulama",
             }
         };
+
+        // Sayfa açıldığında varsayılan olarak Türkçe'yi seçiyoruz
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang') || 'tr';  // URL'den dil parametresini al, varsayılan Türkçe
+        changeLanguage(lang);  // Varsayılan dilin seçilmesi
     </script>
 </body>
 </html>
