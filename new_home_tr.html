@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,22 +95,28 @@
                 </div>
 
                 <div class="form-group">
-                     <label for="attachment" data-lang="attachment">Olayınızı destekleyen kanıtları ekleyin (ekran görüntüleri, vb.).</label> <br><br>
+                     <label for="attachment" data-lang="attachment">Olayınızı destekleyen kanıtları ekleyin (ekran görüntüleri, vb.).</label> <br>
                     <input type="file" id="attachment" name="attachment" multiple>
                 </div>
 
-                <!-- İç denetim çalışanı bildirimi -->
-                <label for="auditYes" data-lang="auditYes">Bu bildirim bir İç Denetim çalışanı ile ilgili mi?</label><br>
-                <input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes"> <span data-lang="yes">Evet</span>
-                <input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no"> <span data-lang="no">Hayır</span><br>
+           <!-- İç denetim çalışanı bildirimi -->
+<div class="radio-buttons">
+    <label for="auditYes" data-lang="auditYes">Bu bildirim bir İç Denetim çalışanı ile ilgili mi?</label><br>
+    <input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes">
+    <label for="auditYes" data-lang="yes">Evet</label>
+    <input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no">
+    <label for="auditNo" data-lang="no">Hayır</label>
+</div>
+<div id="auditWarning" class="hidden">
+    <p style="color:red;"><i>Bu bildiriminiz İç Denetim Departmanındaki bir çalışan ile ilgili olduğu için, bildiriminiz İç Denetim Departmanına iletilmeyecek ve doğrudan İnsan Departmanına yönlendirilecektir. Bildiriminizin gizliliğine zarar vermemek için söz konusu bu bildiriminiz ve güncel statü bilgisi, bildirim sorgulama sisteminde görüntülenmeyecektir. Bildiriminiz ile ilgili bilgi almak <a href="mailto:xxx.yyy@getir.com" style="color:blue;">xxx.yyy@getir.com</a> adresine bildirim numaranızı belirterek eposta gönderebilirsiniz.</i></p>
+</div>
                 <div class="form-group">
-                   <label data-lang="introduce">Kendinizi tanıtmak ister misiniz?</label>
-                    <div>
-                        <input type="radio" id="introduceYes" name="introduce" value="yes" required>
-                        <label for="introduceYes" data-lang="introduceYes">Evet</label>
-                    
-                        <input type="radio" id="introduceNo" name="introduce" value="no" required>
-                        <label for="introduceNo" data-lang="introduceNo">Hayır</label>
+                    <label data-lang="introduce">Kendinizi tanıtmak ister misiniz?</label>
+      <div class="radio-buttons">
+        <input type="radio" id="introduceYes" name="introduce" value="yes" required>
+        <label for="introduceYes" data-lang="introduceYes">Evet</label>
+        <input type="radio" id="introduceNo" name="introduce" value="no" required>
+        <label for="introduceNo" data-lang="introduceNo">Hayır</label>
                     </div>
                     <div id="anonymousWarning" class="hidden">
                      <p style="color:red;"><i>Anonim kalmayı tercih ettiniz. Ancak, bildiriminizle ilgili ek sorularımız olursa, sizinle iletişim kuracak herhangi bir iletişim bilgisine sahip değiliz. Eğer bildiriminiz için ek bilgiye ihtiyaç duyulursa, sizinle iletişim kuramayacağız ve bildiriminiz düzgün bir şekilde değerlendirilemeyebilir. Kimliğinizi açığa çıkarmadan bir e-posta adresi sağlamanız sizin için faydalı olabilir. Bunu yapmak isterseniz, lütfen aşağıya e-posta adresinizi giriniz. Aksi halde size vereceğimiz bildirim numarası ile bildiriminizin durumunu sorgulayıp ilave bilgi ihtiyacı olup olmadığını kontrol ediniz.</i></p>

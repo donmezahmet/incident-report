@@ -101,12 +101,17 @@
                 </div>
 
                 <!-- İç denetim çalışanı bildirimi -->
-               <label for="auditYes" data-lang="auditYes">Is this report related to an internal audit employee?</label><br>
-<input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes"> <span data-lang="yes">Yes</span>
-<input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no"> <span data-lang="no">No</span><br>
+              <div class="radio-buttons">
+    <label for="auditYes" data-lang="auditYes"> Is this report related to an internal audit employee?</label><br>
+    <input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes">
+    <label for="auditYes" data-lang="yes">Yes</label>
+    <input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no">
+    <label for="auditNo" data-lang="no">No</label>
+</div>
+<div id="auditWarning" class="hidden">
+   <p style="color:red;"><i>Since this report is related to an employee in the Internal Audit Department, it will not be forwarded to the Internal Audit Department and will be directly redirected to the Human Resources Department. To maintain the confidentiality of your report, it and its current status will not be displayed in the report query system. To inquire about your report, you can send an email to <a href="mailto:xxx.yyy@getir.com" style="color:blue;">xxx.yyy@getir.com</a> with your report number.</i></p>
 
-                
-
+</div>
                 <div class="form-group">
                     <label data-lang="introduce">Would you like to introduce yourself?</label>
                     <div>

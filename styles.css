@@ -49,18 +49,49 @@ a {
 }
 
 .form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    margin-left: 5px;
-    color: #4a4a4a;
-}
-
-input[type="radio"] {
     margin-bottom: 10px;
-    margin-right: 5px;
 }
+
+/* Radyo butonları ve etiketler arasındaki hizalamayı ayarla */
+.radio-buttons {
+    display: block;
+    align-items: center; /* Butonları ve etiketleri hizalar */
+    margin-bottom: 10px;
+    justify-content: flex-start; /* Evet ve Hayır'ı sola hizalar */
+}
+
+/* Radyo butonları arasındaki boşluğu azalt */
+.radio-buttons input[type="radio"] {
+    margin-bottom: 5px;  /* Butonlar arasındaki boşluğu artır */
+    margin-right: 5px;  /* Etiket ile buton arasındaki boşluk */
+}
+
+/* Etiketlerin hizalanmasını sağlamak */
+.radio-buttons label {
+    margin-right: 8px; /* Etiketler arasındaki boşluğu artırma */
+    font-size: 14px;     /* Font boyutunu belirliyoruz */
+    color: #4a4a4a;      /* Etiketlerin rengini belirliyoruz */
+}
+
+
+
+
+/* Genel label stilini ayarlamak */
+label {
+    margin-bottom: 5px;  /* Etiketler ile öğe arasındaki mesafeyi artır */
+    font-size: 14px;     /* Font boyutunu belirliyoruz */
+    color: #4a4a4a;      /* Etiketlerin rengini belirliyoruz */
+}
+
+/* 'attachment' label'ı için özel stil */
+label[for="attachment"] {
+    margin-bottom: 10px; /* 'attachment' etiketi için biraz daha fazla boşluk */
+    font-size: 14px;     /* Daha büyük bir font boyutu */
+    color: #4a4a4a;      /* Etiketlerin rengini belirliyoruz */
+}
+
+
+
 
 input[type="text"],
 input[type="email"],
@@ -128,6 +159,13 @@ button:hover {
 .faq {
     width: 100%;
 }
+#successMessage {
+    margin-bottom: 20px; /* Butonla arasına 20px boşluk ekler */
+}
+
+#homeButton {
+    margin-top: 10px; /* Mesajla buton arasına 10px boşluk ekler */
+}
 
 .faq-question {
      background-color: #007bff;
@@ -159,11 +197,30 @@ button:hover {
     outline: none;
 }
 
+/* Select öğesinin stilini düzelten kod */
 select {
-    margin-bottom: 10px;
     width: 100%;
     padding: 10px;
+    font-size: 14px; /* Font boyutunu belirle */
+    color: #4a4a4a; /* Yazı rengini belirle */
+    background-color: #fff; /* Arka plan rengi */
+    border: 1px solid #ccc; /* Sınır rengi */
+    border-radius: 5px; /* Yuvarlatılmış köşeler */
     box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+
+/* Placeholder'lar için özel stil */
+select:focus {
+    border-color: #1a73e8; /* Focus olduğunda sınır rengini mavi yapıyoruz */
+    outline: none;  /* Outline'ı kaldırıyoruz */
+}
+
+/* "Seçiniz" metni için daha fazla özelleştirme */
+select option:disabled {
+    color: #aaa;  /* Seçiniz metnini gri yapıyoruz */
+    font-style: italic;  /* İtalik yapıyoruz */
 }
  .language-selector {
             display: flex;

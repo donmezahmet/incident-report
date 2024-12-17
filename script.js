@@ -1,10 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const internalAuditYes = document.getElementById('auditYes');
-    const internalAuditNo = document.getElementById('auditNo');
 
-    // Dil öğesini kontrol et, eğer yoksa varsayılan olarak 'en' olarak ayarla
-    const languageElement = document.getElementById('language');
-    const language = languageElement ? languageElement.value : 'en';
+    const auditYes = document.getElementById('auditYes');
+    const auditNo = document.getElementById('auditNo');
+    const auditWarning = document.getElementById('auditWarning');
+
+    // 'auditYes' seçildiğinde uyarıyı göster
+    if (auditYes) {
+        auditYes.addEventListener('change', function () {
+            if (auditYes.checked) {
+                auditWarning.classList.remove('hidden'); // Uyarıyı göster
+            }
+        });
+    }
+
+    // 'auditNo' seçildiğinde uyarıyı gizle
+    if (auditNo) {
+        auditNo.addEventListener('change', function () {
+            if (auditNo.checked) {
+                auditWarning.classList.add('hidden'); // Uyarıyı gizle
+            }
+        });
+    }
+
+    // Sayfanın dilini doğru şekilde alıyoruz
+    let language = document.documentElement.lang;  // HTML lang attribute'undan dil bilgisini alıyoruz
+    console.log("Language:", language);  // Sayfa dilini konsola yazdırıyoruz
 
     // Success message'ı burada kontrol edelim
     const successMessageElement = document.querySelector('#successMessage');
@@ -22,13 +42,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('incidentForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
+        // Form gönderildiğinde, sayfanın dilini konsola yazdırıyoruz
+        console.log("Language:", language);
+
         // "internalAudit" seçeneklerinin kontrolü
-        const internalAuditYesChecked = internalAuditYes.checked;
-        const internalAuditNoChecked = internalAuditNo.checked;
+        const internalAuditYesChecked = auditYes.checked;
+        const internalAuditNoChecked = auditNo.checked;
 
         // Eğer her iki seçenek de işaretlenmemişse, hata mesajı göster
         if (!internalAuditYesChecked && !internalAuditNoChecked) {
-            alert("Lütfen 'Yes' veya 'No' seçeneğini işaretleyin.");
+            alert("Lütfen 'Evet' veya 'Hayır' seçeneğini işaretleyin.");
             return;
         }
 
@@ -171,6 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 const successMessage = translations[language].successMessage + ' ' + translations[language].ticketNumber + ticketNumber + '. ' + translations[language].checkStatus;
                                 const successMessageElement = document.getElementById('successMessage');
                                 successMessageElement.innerHTML = successMessage;
+                                 const space = document.createElement('br');
+                            successMessageElement.appendChild(space);
                                 const homeButton = document.createElement('button');
                                 homeButton.id = 'homeButton';
                                 homeButton.textContent = translations[language].goToHomePage;
@@ -224,7 +249,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             const successMessage = translations[language].successMessage + ' ' + translations[language].ticketNumber + ticketNumber + '. ' + translations[language].checkStatus;
                             const successMessageElement = document.getElementById('successMessage');
                             successMessageElement.innerHTML = successMessage;
+                            const space = document.createElement('br');
+                            successMessageElement.appendChild(space);
                             const homeButton = document.createElement('button');
+                            console.log(language);
                             homeButton.id = 'homeButton';
                             homeButton.textContent = translations[language].goToHomePage;
                             homeButton.onclick = function() {
@@ -245,6 +273,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 
 
@@ -388,9 +417,10 @@ let language = 'en'; // Varsayılan dil İngilizce
     });
 
 
- function changeLanguage(lang) {
+ // Dil değişikliği sırasında metinleri güncelleyen fonksiyon
+    function changeLanguage(lang) {
         // Sayfadaki tüm 'data-lang' özelliğine sahip öğeleri güncelle
-       document.querySelectorAll('[data-lang]').forEach(el => {
+        document.querySelectorAll('[data-lang]').forEach(el => {
             el.innerHTML = translations[lang][el.getAttribute('data-lang')];
         });
     document.querySelector('h1').textContent = translations[lang].title;
@@ -591,7 +621,7 @@ const translations = {
         nonEmployee: "Çalışan Değil",
         submit: "Gönder",
         warning: "Şartlar ve Koşulları kabul etmeden devam edemezsiniz.",
-        successTitle: "Bildiriminiz İçin Teşekkürler!",
+        successTitle: "Bildiriminiz için teşekkürler!",
         successMessage: "Bildiriminiz başarıyla gönderildi. Teşekkürler!",
         ticketNumber: "Bilet numaranız ",
         checkStatus: "Bu numara ile biletinizin durumunu kontrol edebilirsiniz.",
