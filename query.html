@@ -34,20 +34,19 @@
             width: 100%;
             height: 100%;
         }
+
         .container form {
-            width: 400px;  /* Genişliği sabitliyoruz */
-            margin: 0 auto; /* Ortalamak için */
+            width: 400px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="language-selector">
-            <!-- Turkish Flag -->
             <span id="trFlag" class="language-icon">
                 <img src="tr.png" alt="Türkçe">
             </span>
-            <!-- English Flag -->
             <span id="enFlag" class="language-icon">
                 <img src="eng.png" alt="English">
             </span>
@@ -78,84 +77,146 @@
 
             <button type="submit" data-lang="submitBtn">Submit</button>
         </form>
+        <div id="loading" class="hidden">
+            <img src="loading5.gif" alt="Loading...">
+        </div>
         <div id="resultMessage" class="result-message"></div>
     </div>
 
-    <script>
-        // Change language based on flag click
-        document.getElementById('trFlag').addEventListener('click', function() {
-            changeLanguage('tr');
+ <script>
+    // Change language based on flag click
+    document.getElementById('trFlag').addEventListener('click', function() {
+        changeLanguage('tr');
+    });
+
+    document.getElementById('enFlag').addEventListener('click', function() {
+        changeLanguage('en');
+    });
+
+    // Change language logic
+    function changeLanguage(lang) {
+        document.querySelectorAll('[data-lang]').forEach(el => {
+            el.innerHTML = translations[lang][el.getAttribute('data-lang')];
         });
 
-        document.getElementById('enFlag').addEventListener('click', function() {
-            changeLanguage('en');
-        });
+        // Adjust the flag opacity to indicate active language
+        document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
+        document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
 
-        // Change language logic
-        function changeLanguage(lang) {
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                el.innerHTML = translations[lang][el.getAttribute('data-lang')];
-            });
+        // Re-translate the result message based on the selected language
+        translateResultMessage(lang);
+    }
 
-            // Adjust the flag opacity to indicate active language
-            document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
-            document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
-        }
-
-        const translations = {
-            en: {
-                selectLanguage: "Select Language",
-                queryTitle: "Query an Incident",
-                ticketNumber: "Ticket Number",
-                securityQuestion: "Security Question",
-                firstPet: "What was the name of your first pet?",
-                motherMaiden: "What is your mother's maiden name?",
-                firstSchool: "What was the name of your first school?",
-                favoriteTeacher: "Who was your favorite teacher?",
-                birthCity: "In which city were you born?",
-                securityAnswer: "Your Answer",
-                submitBtn: "Submit"
-            },
-            tr: {
-                selectLanguage: "Dil Seçiniz",
-                queryTitle: "Bildirim Sorgulama",
-                ticketNumber: "Bildirim Numarası",
-                securityQuestion: "Gizli Soru",
-                firstPet: "İlk evcil hayvanınızın adı nedir?",
-                motherMaiden: "Annenizin kızlık soyadı nedir?",
-                firstSchool: "İlkokulunuzun adı nedir?",
-                favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
-                birthCity: "Hangi şehirde doğdunuz?",
-                securityAnswer: "Cevabınız",
-                submitBtn: "Gönder"
-            }
-        };
-
-        document.getElementById('queryForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
+    // Translate result message
+    function translateResultMessage(lang) {
+        const resultMessage = document.getElementById('resultMessage');
+        if (resultMessage.innerText) {
             const ticketNumber = document.getElementById('ticketNumber').value;
-            const securityQuestion = document.getElementById('securityQuestion').value;
-            const securityAnswer = document.getElementById('securityAnswer').value;
+            const ticketStatus = resultMessage.innerText.match(/\"(.*?)\"/);
+            if (ticketStatus) {
+                resultMessage.innerHTML = translations[lang].resultMessage
+                    .replace('{ticketNumber}', ticketNumber)
+                    .replace('{ticketStatus}', `<strong>${translations[lang].ticketStatus[ticketStatus[1]] || ticketStatus[1]}</strong>`);
+            }
+        }
+    }
 
-            fetch(`https://script.google.com/macros/s/AKfycbyzPaTcXFrE6P1sA6Ru2Vu4Bm1jnOb_tmdpT0ZK0p9Qkg1CNtdv3d1WsE0FvvRg0S_H/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
-                .then(response => response.json())
-                .then(data => {
-                    const resultMessage = document.getElementById('resultMessage');
-                    if (data.status === 'success') {
-                        resultMessage.innerText = `Your ticket (number: ${ticketNumber}) is currently in the "${data.ticketStatus}" status.`;
-                    } else {
-                        resultMessage.innerHTML = `Sorry, there seems to be an error with the information you provided. Please check and try again.`;
-                        resultMessage.classList.add('error-message');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    const resultMessage = document.getElementById('resultMessage');
-                    resultMessage.innerText = 'An error occurred while querying the incident.';
+    const translations = {
+        en: {
+            selectLanguage: "Select Language",
+            queryTitle: "Query an Incident",
+            ticketNumber: "Ticket Number",
+            securityQuestion: "Security Question",
+            firstPet: "What was the name of your first pet?",
+            motherMaiden: "What is your mother's maiden name?",
+            firstSchool: "What was the name of your first school?",
+            favoriteTeacher: "Who was your favorite teacher?",
+            birthCity: "In which city were you born?",
+            securityAnswer: "Your Answer",
+            submitBtn: "Submit",
+            resultMessage: "Your ticket ({ticketNumber}) is currently in the {ticketStatus} status.",
+            resultError: "Sorry, there seems to be an error with the information you provided. Please check and try again.",
+            resultApiError: "An error occurred while querying the incident.",
+            ticketStatus: {
+                "To Do": "To Do",
+                "In Progress": "In Progress",
+                "Completed": "Completed"
+            }
+        },
+        tr: {
+            selectLanguage: "Dil Seçiniz",
+            queryTitle: "Bildirim Sorgulama",
+            ticketNumber: "Bildirim Numarası",
+            securityQuestion: "Gizli Soru",
+            firstPet: "İlk evcil hayvanınızın adı nedir?",
+            motherMaiden: "Annenizin kızlık soyadı nedir?",
+            firstSchool: "İlkokulunuzun adı nedir?",
+            favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
+            birthCity: "Hangi şehirde doğdunuz?",
+            securityAnswer: "Cevabınız",
+            submitBtn: "Sorgula",
+            resultMessage: "Bildiriminiz ({ticketNumber}) şu anda {ticketStatus} statüsündedir.",
+            resultError: "Üzgünüz, sağladığınız bilgilere dair bir hata oluştu. Lütfen kontrol edip tekrar deneyin.",
+            resultApiError: "Bildirim sorgulama sırasında bir hata oluştu.",
+            ticketStatus: {
+                "To Do": "İncelenmek Üzere Bekliyor",
+                "In Progress": "İnceleme Devam Ediyor",
+                "Completed": "İnceleme Tamamlandı"
+            }
+        }
+    };
+
+    document.getElementById('queryForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Show the loading gif
+        document.getElementById('loading').classList.remove('hidden'); // Remove hidden to show
+        document.querySelector('.container').style.opacity = '0.5'; // Reduce opacity of form container
+
+        const ticketNumber = document.getElementById('ticketNumber').value;
+        const securityQuestion = document.getElementById('securityQuestion').value;
+        const securityAnswer = document.getElementById('securityAnswer').value;
+
+        fetch(`https://script.google.com/macros/s/AKfycbyZ20IBSBGfZ2KGdzPJFNgb8o5epTV_h3Z9Cy60t8-l6QhnNZIvLxU-lAT3v9k_ujMh/exec?ticketNumber=${ticketNumber}&securityQuestion=${securityQuestion}&securityAnswer=${securityAnswer}`)
+            .then(response => response.json())
+            .then(data => {
+                const resultMessage = document.getElementById('resultMessage');
+                
+                // Hide the loading gif after receiving response
+                document.getElementById('loading').classList.add('hidden'); // Add hidden class to hide gif
+                document.querySelector('.container').style.opacity = '1'; // Restore form opacity
+                
+                if (data.status === 'success') {
+                    resultMessage.innerHTML = translations[getCurrentLanguage()].resultMessage
+                        .replace('{ticketNumber}', ticketNumber)
+                        .replace('{ticketStatus}', `<strong>${translations[getCurrentLanguage()].ticketStatus[data.ticketStatus] || data.ticketStatus}</strong>`);
+                } else {
+                    resultMessage.innerHTML = translations[getCurrentLanguage()].resultError;
                     resultMessage.classList.add('error-message');
-                });
-        });
-    </script>
+                }
+
+                // Translate result message after receiving the response
+                translateResultMessage(getCurrentLanguage());
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultMessage = document.getElementById('resultMessage');
+                resultMessage.innerText = translations[getCurrentLanguage()].resultApiError;
+                resultMessage.classList.add('error-message');
+                
+                // Hide loading gif after error
+                document.getElementById('loading').classList.add('hidden');
+                document.querySelector('.container').style.opacity = '1';
+            });
+    });
+
+    // Get the current language (default to English)
+    function getCurrentLanguage() {
+        return document.getElementById('trFlag').style.opacity === '1' ? 'tr' : 'en';
+    }
+
+    // Initial language setup
+    changeLanguage('en');
+</script>
 </body>
 </html>

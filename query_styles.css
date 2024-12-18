@@ -24,3 +24,25 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* Yükleme gif'ini gizlemek için hidden sınıfı */
+.hidden {
+    display: none; /* Başlangıçta gizli */
+}
+
+/* Loading gif'in kendisi */
+#loading {
+    position: fixed; /* Ekranın her yerinde sabit kalacak */
+    top: 50%; /* Ekranın ortasında yatayda yerleştirilir */
+    left: 50%; /* Ekranın ortasında dikeyde yerleştirilir */
+    transform: translate(-50%, -50%); /* Tam ortalama */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999; /* Diğer tüm içeriklerin üstünde olacak */
+}
+/* Formun görünümünü iyileştirelim */
+.container {
+    position: relative;
+}

@@ -274,9 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
-
 // "Introduce" ve "Employee Name" kısmının işleyişi burada...
 
 

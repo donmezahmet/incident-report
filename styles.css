@@ -322,6 +322,7 @@ select option:disabled {
         width: 100%;
         top: 50%;
         left: 0;
+        background: transparent;
         transform: translate(0, -50%);
     }
 }
