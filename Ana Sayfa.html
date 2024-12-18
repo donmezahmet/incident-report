@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)file:///Users/ahmetdonmez/Documents/geti_rnew/incident-report/index.html -->
+<html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="homeTitle">Ana Sayfa</title>  <!-- Buradaki title'ı değiştireceğiz -->
+    <link rel="stylesheet" href="./Ana Sayfa_files/styles.css">
+    <link rel="stylesheet" href="./Ana Sayfa_files/home_styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <div>
+                <!-- Türkçe Bayrağı -->
+                <span id="trFlag" class="language-icon" style="opacity: 1;">
+                    <img src="./Ana Sayfa_files/tr.png" alt="">
+                </span>
+                <!-- İngilizce Bayrağı -->
+                <span id="enFlag" class="language-icon" style="opacity: 0.5;">
+                    <img src="./Ana Sayfa_files/eng.png" alt="">
+                </span>
+            </div>
+        </div>
+        
+        <h1 data-lang="welcomeTitle">SpeakUp Platformuna <br> Hoşgeldiniz</h1>
+        <button id="reportBtn" data-lang="reportBtn">Bir Olay Bildirin</button>
+        <button id="queryBtn" data-lang="queryBtn">Olay Sorgulama</button>
+    </div>
+
+    <script>
+        // Bayrağa tıklayınca dil değişimi
+        document.getElementById('trFlag').addEventListener('click', function() {
+            changeLanguage('tr');
+        });
+
+        document.getElementById('enFlag').addEventListener('click', function() {
+            changeLanguage('en');
+        });
+
+        // Dil değişimini işleme
+        function changeLanguage(lang) {
+            // Sayfa başlığını güncelle
+            document.querySelector('title').innerHTML = translations[lang]['homeTitle'];
+
+            // Sayfadaki metinleri güncelle
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                el.innerHTML = translations[lang][el.getAttribute('data-lang')];
+            });
+
+            // Bayrak ikonunun görünümünü güncelle
+            document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
+            document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
+        }
+
+        // Olay bildirim butonuna tıklama
+        document.getElementById('reportBtn').addEventListener('click', function() {
+            const lang = getSelectedLanguage();
+            window.location.href = lang === 'tr' ? 'new_home_tr.html' : 'new_home.html';
+        });
+
+        // Olay sorgulama butonuna tıklama
+        document.getElementById('queryBtn').addEventListener('click', function() {
+            const lang = getSelectedLanguage();
+            window.location.href = lang === 'tr' ? 'query_tr.html' : 'query.html';
+        });
+
+        // Dil seçim fonksiyonu
+        function getSelectedLanguage() {
+            const trFlagOpacity = document.getElementById('trFlag').style.opacity;
+            return trFlagOpacity === '1' ? 'tr' : 'en';
+        }
+
+        const translations = {
+            en: {
+                homeTitle: "Home",
+                selectLanguage: "Select Language",
+                welcomeTitle: "Welcome to the <br>SpeakUp Platform",
+                reportBtn: "Report an Incident",
+                queryBtn: "Query an Incident",
+            },
+            tr: {
+                homeTitle: "Ana Sayfa",  // Türkçe sayfa başlığı
+                selectLanguage: "Dil Seçiniz",
+                welcomeTitle: "SpeakUp Platformuna <br> Hoşgeldiniz",
+                reportBtn: "Bir Olay Bildirin",
+                queryBtn: "Olay Sorgulama",
+            }
+        };
+
+        // Sayfa açıldığında varsayılan olarak Türkçe'yi seçiyoruz
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang') || 'tr';  // URL'den dil parametresini al, varsayılan Türkçe
+        changeLanguage(lang);  // Varsayılan dilin seçilmesi
+    </script>
+
+
+</body></html>
