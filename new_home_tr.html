@@ -16,7 +16,7 @@
             <img id="enFlag" src="eng.png" alt="English" class="flag-icon">
         </div>
       <h1 data-lang="title">Bir Olay Bildirin</h1>
-        <p id="introText" data-lang="intro">Sorularınızı gönderebilir veya Getir'e Getir Speak Up üzerinden olayları bildirebilirsiniz. Anonim kalmayı tercih ettiğinizde, Getir kimliğinizi belirleyemez ve yalnızca Getir Speak Up üzerinden sizinle iletişim kurabilir. Kimliğinizi Getir'e sağlamayı tercih ederseniz, sorularınızda veya olay raporlarınızda yer alan kişisel verileriniz Getir tarafından işlenecektir. Kişisel verilerinizin işlenmesiyle ilgili daha fazla bilgi için lütfen <a id="privacy-link" href="https://drive.google.com/file/d/1LQMqTUgPGWIbVrZmATwP8jGtF_2V5CTR/view" target="_blank">Getir Speak Up Gizlilik Bildirimini</a>.</p>
+        <p id="introText" data-lang="intro">Getir'e, Getir SpeakUp üzerinden vaka bildiriminde bulunabilirsiniz. Bildirimlerinizde anonim kalmayı tercih etmeniz halinde, Getir kimliğinizi belirleyemez ve sizinle yalnızca Getir SpeakUp üzerinden iletişim kurulabilir. Kimliğinizi Getir'le paylaşmayı tercih etmeniz halinde ise, sorularınızda veya bildirimlerinizde yer alan kişisel verileriniz Getir tarafından işlenecektir. Kişisel verilerinizin işlenmesiyle ilgili daha fazla bilgi için lütfen <a id="privacy-link" href="https://drive.google.com/file/d/1LQMqTUgPGWIbVrZmATwP8jGtF_2V5CTR/view" target="_blank">Getir SpeakUp Aydınlatma Metnini </a>inceleyiniz. Her türlü sorunuz için speakup@getir.com adresine başvurabilirsiniz.</a>.</p>
 
         <form id="incidentForm" enctype="multipart/form-data">
             <div class="form-group">
@@ -34,7 +34,7 @@
             <div id="additionalQuestions" class="hidden">
                 <div class="form-group">
                    <label for="issueDetails" data-lang="issueDetails">Olay Detayları*</label> <br>
-                   <textarea id="issueDetails" required placeholder="İddiaya konu olan ihlal ile ilgili tüm ayrıntıları sağlayın, olayın gerçekleştiği yerler, olayın tanıkları, durumun değerlendirmesi ve sorunun değerlendirilmesi ve düzeltilmesi için yararlı olabilecek diğer bilgiler dahil. Zamanınızı ayırın ve mümkün olduğunca fazla ayrıntı sağlayın; ancak, adınızı açıklamak istemiyorsanız, kimliğinizi açığa çıkarabilecek ayrıntıları eklememeye dikkat edin. Bu durumdan haberdar olan tek kişi sizseniz, bunu bilmemiz gerekebilir"></textarea>
+                   <textarea id="issueDetails" required placeholder="Lütfen olayla ilgili tüm ayrıntıları belirtin. Olayın gerçekleştiği yer, tanık olabilecek kişiler gibi, vakanın aydınlatılmasında fayda sağlayacak detayları açıklamanız kritik önem taşımaktadır. Zaman ayırarak mümkün olduğunca fazla detay verin. Ancak kimliğinizi gizli tutmak istiyorsanız, bunu ifşa edecek ayrıntılar vermekten kaçının. Öte yandan, vakadan haberdar olan tek kişi sizseniz, bu durumu bildirmeniz fayda sağlayacaktır."></textarea>
                 </div>
 
                 <div class="form-group">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="form-group hidden" id="dateQuestions">
-              <label for="issueDate" data-lang="issueDate">Lütfen olayın başladığı tarihi belirtin (Tarih)</label><br>
+              <label for="issueDate" data-lang="issueDate">Lütfen olayın başladığı tarihi belirtin (Tarih)*</label><br>
                     <input type="date" id="issueDate" name="issueDate">
                 </div>
 
@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="form-group hidden" id="timeQuestion">
-                   <label for="issueTime" data-lang="issueTime">Lütfen olayın gerçekleştiği zamanı belirtin (Zaman)</label><br>
+                   <label for="issueTime" data-lang="issueTime">Lütfen olayın gerçekleştiği zamanı belirtin (Zaman)*</label><br>
                     <input type="time" id="issueTime" name="issueTime">
                 </div>
 
@@ -119,7 +119,7 @@
         <label for="introduceNo" data-lang="introduceNo">Hayır</label>
                     </div>
                     <div id="anonymousWarning" class="hidden">
-                     <p style="color:red;"><i>Anonim kalmayı tercih ettiniz. Ancak, bildiriminizle ilgili ek sorularımız olursa, sizinle iletişim kuracak herhangi bir iletişim bilgisine sahip değiliz. Eğer bildiriminiz için ek bilgiye ihtiyaç duyulursa, sizinle iletişim kuramayacağız ve bildiriminiz düzgün bir şekilde değerlendirilemeyebilir. Kimliğinizi açığa çıkarmadan bir e-posta adresi sağlamanız sizin için faydalı olabilir. Bunu yapmak isterseniz, lütfen aşağıya e-posta adresinizi giriniz. Aksi halde size vereceğimiz bildirim numarası ile bildiriminizin durumunu sorgulayıp ilave bilgi ihtiyacı olup olmadığını kontrol ediniz.</i></p>
+                     <p style="color:red;"><i>”Hayır” seçimi ile ilerleyerek kimliğinizi gizlemeyi tercih ettiniz. Bildiriminizle ilgili ek sorularımız olması halinde anonim kalmanız sebebiyle sizinle iletişim kuramayacak olmamız vakanın doğru biçimde değerlendirilmesini engelleyebilecektir. Bu noktada, kimliğinizi ifşa etmeyen bir e-posta adresi sağlayarak bize destek olabilirsiniz. Bunu yapmak isterseniz, lütfen aşağıya anonim bir e-posta adresi giriniz. Aksi halde size vereceğimiz bildirim numarası ile vaka durumunu sorgulayarak ilave bilgi ihtiyacı olup olmadığını kontrol ediniz.</i></p>
            <input type="email" id="contactEmail" name="contactEmail" placeholder="E-posta Adresiniz (isteğe bağlı)">
                 </div>
                 </div>
@@ -166,6 +166,7 @@
                         <option value="birthCity" data-lang="birthCity">Hangi şehirde doğdunuz?</option>
                     </select>
                     <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Cevabınız">
+                    <small style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;"> Bu alan büyük ve küçük harf duyarlıdır. Lütfen cevabınızı dikkatli bir şekilde giriniz.</small>
                    <p id="securityWarning" class="hidden" data-lang="securityWarning">Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız.</p>
                 </div>
             </div>
@@ -189,12 +190,12 @@
 
     <div class="faq-container">
        <h2 id="faqTitle" data-lang="faqTitle">Sıkça Sorulan Sorular</h2>
-        <button class="faq-question" id="q1" data-lang="q1">Getir Speak Up nedir?</button>
-        <div class="faq-answer" id="a1" data-lang="a1">Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir Etik ve Uyum Yöneticisine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.</div>
+        <button class="faq-question" id="q1" data-lang="q1">Getir SpeakUp nedir?</button>
+        <div class="faq-answer" id="a1" data-lang="a1">Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir İç denetim & Soruşturma ekibine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.</div>
         <button class="faq-question" id="q2" data-lang="q2">Hangi konularda etik bildirimde bulunulur?</button>
         <div class="faq-answer" id="a2" data-lang="a2">Getir kültürüne, Getir etik değerlerine, profesyonel standartlara ve ilgili yasalara aykırı olduğunu düşündüğünüz her durumu bildirebilirsiniz. Bu kapsamda veri sızıntısı, rüşvet ve yolsuzluk, çıkar çatışması, gizli bilgi ihlali, uygunsuz gider bildirimi, kurum kaynaklarını kişisel çıkarlar için kullanma, ayrımcılık, mobbing, rekabete aykırı davranışlar gibi birçok başlıkta bildirimde bulunulması mümkündür.</div>
         <button class="faq-question" id="q3" data-lang="q3">Bildirimde bulunurken ismimi açıklamak zorunda mıyım?</button>
-        <div class="faq-answer" id="a3" data-lang="a3">Getir Speak Up'a bir bildirimde bulunduğunuz zaman, iletişimi kolaylaştırması açısından kimliğinizi açıklamayı ya da kimliğinizi saklı tutmayı tercih edebilirsiniz. Kimliğinizi açıklamanız halinde incelemeyi yapacak olan Getir Etik ve Uyum Yöneticisi kimliğinizi saklı tutmak için her türlü önlemi alacaktır. Bildiriminizin değerlendirilmeye alınması bakımından kimliğinizi açıklayıp açıklamamanızın sürecin işleyişine herhangi bir olumsuz etkisi bulunmayacaktır. Bildirimde bulunan kişinin rızası olmaksızın, hiçbir şekilde kimlik bilgileri ya da kimliğini ortaya çıkarabilecek herhangi bir bilgi gerekli hallerde Yasal mercilerle paylaşılmasının zorunlu olması haricinde Getir veya 3. şahıslar ile paylaşılmaz.</div>
+        <div class="faq-answer" id="a3" data-lang="a3">Getir SpeakUp'a bir bildirimde bulunduğunuz zaman, iletişimi kolaylaştırması açısından kimliğinizi açıklamayı ya da kimliğinizi saklı tutmayı tercih edebilirsiniz. Kimliğinizi açıklamanız halinde incelemeyi yapacak olan Getir İç denetim & Soruşturma ekibi kimliğinizi saklı tutmak için her türlü önlemi alacaktır. Bildiriminizin değerlendirilmeye alınması bakımından kimliğinizi açıklayıp açıklamamanızın sürecin işleyişine herhangi bir olumsuz etkisi bulunmayacaktır. Bildirimde bulunan kişinin rızası olmaksızın, hiçbir şekilde kimlik bilgileri ya da kimliğini ortaya çıkarabilecek herhangi bir bilgi gerekli hallerde Yasal mercilerle paylaşılmasının zorunlu olması haricinde Getir veya 3. şahıslar ile paylaşılmaz.</div>
         <button class="faq-question" id="q4" data-lang="q4">Bildirimde bulunduğum için bir zarar görür müyüm?</button>
         <div class="faq-answer" id="a4" data-lang="a4">Getir, bir sorunun ortaya çıkarılması için katkıda bulunan Getirlilerin yardımına değer verir. Dürüst ve iyi niyetli bir şekilde bildirimde çalışanlara herhangi bir misilleme (ayrımcılık, hak kaybı, tehdit vb. eylemler) yapılamaz. Ancak bilerek yanlış/asılsız bir suçlamada bulunanlar sorumlu tutulacaktır.</div>
 

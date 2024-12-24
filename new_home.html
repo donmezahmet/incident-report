@@ -15,7 +15,7 @@
             <img id="enFlag" src="eng.png" alt="English" class="flag-icon">
         </div>
        <h1 data-lang="title">Report an Incident</h1>
-        <p id="introText" data-lang="intro">You can report incidents to Getir via Getir Speak Up. When you choose to remain anonymous, Getir cannot identify you, and it will not be possible to contact you regarding your report. Should you choose to provide your identity to Getir, your personal data involved in your questions or incident reports shall be processed by Getir. For further information regarding the processing of your personal data, please see the <a id="privacy-link" href="https://drive.google.com/file/d/1zMDduQ0TCIF0aldK69MmVF8yVw3_KXup/view" target="_blank">Getir Speak Up Privacy Notice</a>.</p>
+        <p id="introText" data-lang="intro">You can report incidents to Getir through Getir SpeakUp. If you choose to remain anonymous in your reports, Getir will not be able to identify you and can only communicate with you through Getir SpeakUp. If you choose to share your identity with Getir, your personal data included in your questions or reports will be processed by Getir. For more information about the processing of your personal data, please review the <a id="privacy-link" href="https://drive.google.com/file/d/1zMDduQ0TCIF0aldK69MmVF8yVw3_KXup/view" target="_blank">Getir SpeakUp Privacy Notice</a>. For any inquiries, please contact speakup@getir.com.</p>
 
         <form id="incidentForm" enctype="multipart/form-data">
             <div class="form-group">
@@ -33,7 +33,7 @@
             <div id="additionalQuestions" class="hidden">
                 <div class="form-group">
                   <label for="issueDetails" data-lang="issueDetails">Issue Details*</label> <br>
-                   <textarea id="issueDetails" required placeholder="Please provide all details related to the alleged violation, including the locations where the incident occurred, witnesses to the incident, an assessment of the situation, and any other information that might be useful for evaluating and correcting the issue. Take your time and provide as much detail as possible; however, if you do not wish to disclose your name, be careful not to include any details that could reveal your identity. If you are the only person aware of this situation, it may be necessary for us to know."></textarea>
+                   <textarea id="issueDetails" required placeholder="Please provide all the details regarding the incident. Specifying details such as the location of the incident and any potential witnesses is crucial to clarify the situation. Please take your time and provide as many details as possible. However, if you wish to keep your identity confidential, avoid providing any details that could reveal it. On the other hand, if you are the only one aware of the incident, reporting it would be beneficial."></textarea>
                 </div>
 
                 <div class="form-group">
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="form-group hidden" id="dateQuestions">
-                       <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date)</label><br>
+                       <label for="issueDate" data-lang="issueDate">Please indicate when the issue occurred (Date)*</label><br>
                     <input type="date" id="issueDate" name="issueDate">
                 </div>
 
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="form-group hidden" id="timeQuestion">
-                 <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time)</label><br>
+                 <label for="issueTime" data-lang="issueTime">Please indicate when the issue occurred (Time)*</label><br>
                     <input type="time" id="issueTime" name="issueTime">
                 </div>
 
@@ -99,7 +99,7 @@
                 </div>
 
                 <div class="radio-buttons">
-                    <label for="auditYes" data-lang="auditYes"> Is this report related to an internal audit employee?</label><br>
+                    <label for="auditYes" data-lang="auditYes"> Is this report related to an Internal Audit employee?</label><br>
                     <input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes">
                     <label for="auditYes" data-lang="yes">Yes</label>
                     <input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no">
@@ -119,7 +119,7 @@
                         <label for="introduceNo" data-lang="introduceNo">No</label>
                     </div>
                     <div id="anonymousWarning" class="hidden">
-                     <p style="color:red;"><i>You chose to remain anonymous. However, if we have additional questions regarding your report, we currently have no contact information to reach you. If further information is needed for your report, we won't be able to reach you, and your report may not be properly evaluated. It may be beneficial for you to provide an email address without revealing your identity. If you would like to do this, please enter your email address below. Otherwise, please check the status of your report using the ticket number we provide, and see if there is any additional information needed.</i></p>
+                     <p style="color:red;"><i>You have chosen to remain anonymous by selecting 'No.' While we respect your privacy, please note that if we need to clarify any details regarding your report, remaining anonymous may limit our ability to fully investigate the incident. To assist us in conducting a thorough assessment, you may consider providing an email address that does not reveal your identity. Alternatively, you can use the reference number we will provide to monitor the status of your report and check for any requests for additional information.</i></p>
                     <input type="email" id="contactEmail" name="contactEmail" placeholder="Your Email (optional)">
                 </div>
                 </div>
@@ -166,6 +166,7 @@
                         <option value="birthCity" data-lang="birthCity">In which city were you born?</option>
                     </select>
                   <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Your Answer">
+                    <small style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;"> This field is case-sensitive. Please enter your answer carefully.</small>
                    <p id="securityWarning" class="hidden" data-lang="securityWarning">This field is required to track the report. It is not mandatory to complete the report, but if this field is empty, you cannot track the report.</p>
                 </div>
             </div>
@@ -189,12 +190,12 @@
 
     <div class="faq-container">
           <h2 id="faqTitle" data-lang="faqTitle">FAQ</h2>
-        <button class="faq-question" id="q1" data-lang="q1">What is Getir Speak Up?</button>
-        <div class="faq-answer" id="a1" data-lang="a1">It is a 24/7 support line where Getir employees can share "ethical misconduct" they have observed or experienced and express their concerns. Reports received are directed to the Getir Ethics and Compliance Executive on the same day, and an investigation is initiated as soon as possible.</div>
+        <button class="faq-question" id="q1" data-lang="q1">What is Getir SpeakUp?</button>
+        <div class="faq-answer" id="a1" data-lang="a1">It is a 24/7 support line where Getir employees can share "ethical misconduct" they have observed or experienced and express their concerns. Reports received are directed to the Getir Internal Audit & Investigation team on the same day, and an investigation is initiated as soon as possible.</div>
         <button class="faq-question" id="q2" data-lang="q2">Which issues are regarded as ethical claims?</button>
         <div class="faq-answer" id="a2" data-lang="a2">Employees can notify any issue contradicting Getir’s culture, ethical values, professional standards and applicable law. In this context, it is possible to report various issues such as data leak, bribery and corruption, conflicts of interest, confidential information breaches, inappropriate expense reporting, misuse of company resources for personal gain, discrimination, mobbing, anti-competitive behaviors, and violations of the company's ethical culture.</div>
         <button class="faq-question" id="q3" data-lang="q3">Do I have to reveal my identity while reporting?</button>
-        <div class="faq-answer" id="a3" data-lang="a3">You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Ethics and Compliance Executive will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals.</div>
+        <div class="faq-answer" id="a3" data-lang="a3">You can either reveal your identity to communicate easily or choose to keep your personal information protected. In case you decide to reveal your identity, Getir Internal Audit & Investigation team will take necessary measures to protect your identity. Whether you reveal your identity or not will not affect the reporting procedure. Without the consent of employees their personal information or any information that might reveal their identity will not be shared with Getir or third-party individuals.</div>
         <button class="faq-question" id="q4" data-lang="q4">Will there be any negative consequences for me after I report an issue?</button>
         <div class="faq-answer" id="a4" data-lang="a4">Getir values the support of its employees in detecting inconsistencies. There will not be any ramifications (discrimination, loss of rights, intimidation, etc.) to those who report their claims honestly and out of goodwill. However, those who intentionally report false claims will be held accountable.</div>
 

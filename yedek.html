@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-lang="homeTitle">Bir Olay Bildirin</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+   <div class="container">
+        <div class="language-selector">
+            <label for="language" data-lang="selectLanguage">Dil Seçiniz</label>
+            <select id="language" name="language">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <h1 data-lang="title">Bir Olay Bildirin</h1>
+        <p id="introText" data-lang="intro">Sorularınızı gönderebilir veya Getir'e Getir Speak Up üzerinden olayları bildirebilirsiniz. Anonim kalmayı tercih ettiğinizde, Getir kimliğinizi belirleyemez ve yalnızca Getir Speak Up üzerinden sizinle iletişim kurabilir. Kimliğinizi Getir'e sağlamayı tercih ederseniz, sorularınızda veya olay raporlarınızda yer alan kişisel verileriniz Getir tarafından işlenecektir. Kişisel verilerinizin işlenmesiyle ilgili daha fazla bilgi için lütfen <a id="privacy-link" href="https://drive.google.com/file/d/1zMDduQ0TCIF0aldK69MmVF8yVw3_KXup/view" target="_blank">Getir Speak Up Gizlilik Bildirimini</a>.</p>
+
+        <form id="incidentForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label data-lang="terms">Başlamadan Önce</label>
+                <div>
+                    <input type="radio" id="agree" name="terms" value="agree">
+                    <label for="agree" data-lang="agree">Şartlar ve Koşulları okudum ve kabul ediyorum.</label>
+                </div>
+                <div>
+                    <input type="radio" id="disagree" name="terms" value="disagree">
+                    <label for="disagree" data-lang="disagree">Şartlar ve Koşulları kabul etmiyorum.</label>
+                </div>
+            </div>
+
+            <div id="additionalQuestions" class="hidden">
+                <div class="form-group">
+                   <label for="issueDetails" data-lang="issueDetails">Olay Detayları*</label> <br>
+                   <textarea id="issueDetails" required placeholder="İddiaya konu olan ihlal ile ilgili tüm ayrıntıları sağlayın, olayın gerçekleştiği yerler, olayın tanıkları, durumun değerlendirmesi ve sorunun değerlendirilmesi ve düzeltilmesi için yararlı olabilecek diğer bilgiler dahil. Zamanınızı ayırın ve mümkün olduğunca fazla ayrıntı sağlayın; ancak, adınızı açıklamak istemiyorsanız, kimliğinizi açığa çıkarabilecek ayrıntıları eklememeye dikkat edin. Bu durumdan haberdar olan tek kişi sizseniz, bunu bilmemiz gerekebilir."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="involvedParties" data-lang="involvedParties">Kimler Dahil Oldu?*</label><br>
+                    <input type="text" id="involvedParties" required placeholder="Bu davranışta bulunan kişi(ler)in kimliğini belirtin.">
+                </div>
+
+                <div class="form-group">
+                    <label for="incidentDuration" data-lang="incidentDuration">Olayın süresi nedir?*</label><br>
+                    <select id="incidentDuration" name="incidentDuration" required>
+                        <option value="choose" data-lang="choose">Seçiniz</option>
+                        <option value="once" data-lang="once">Bir kere oldu</option>
+                        <option value="period" data-lang="period">Bir zaman aralığında oldu</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="ongoingQuestion">
+                    <label for="ongoing" data-lang="ongoing">Halen devam ediyor mu?</label><br>
+                    <select id="ongoing" name="ongoing">
+                        <option value="choose" data-lang="choose">Seçiniz</option>
+                        <option value="yes" data-lang="yes">Evet</option>
+                        <option value="no" data-lang="no">Hayır</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="dateQuestions">
+                    <label for="issueDate" data-lang="issueDate">Lütfen olayın gerçekleştiği tarihi belirtin (Tarih)</label><br>
+                    <input type="date" id="issueDate" name="issueDate">
+                </div>
+
+                <div class="form-group hidden" id="dateRangeQuestions">
+                    <label for="startDate" data-lang="startDate">Başlangıç Tarihi</label><br>
+                    <input type="date" id="startDate" name="startDate"><br>
+                    <label for="endDate" data-lang="endDate">Bitiş Tarihi</label><br>
+                    <input type="date" id="endDate" name="endDate">
+                </div>
+
+                <div class="form-group hidden" id="timeQuestion">
+                    <label for="issueTime" data-lang="issueTime">Lütfen olayın gerçekleştiği zamanı belirtin (Zaman)</label><br>
+                    <input type="time" id="issueTime" name="issueTime">
+                </div>
+
+                <div class="form-group">
+                    <label for="issueLocation" data-lang="issueLocation">Lütfen olayın nerede gerçekleştiğini belirtin*</label><br>
+                    <select id="issueLocation" name="issueLocation" required>
+                        <option value="" disabled selected data-lang="choose">Seçiniz</option>
+                        <option value="Turkey" data-lang="Turkey">Türkiye</option>
+                        <option value="Netherlands" data-lang="Netherlands">Hollanda</option>
+                        <option value="Germany" data-lang="Germany">Almanya</option>
+                        <option value="France" data-lang="France">Fransa</option>
+                        <option value="Spain" data-lang="Spain">İspanya</option>
+                        <option value="United Kingdom" data-lang="UK">Birleşik Krallık</option>
+                        <option value="US" data-lang="US">ABD</option>
+                        <option value="Other" data-lang="other">Diğer</option>
+                    </select>
+                    <input type="text" id="otherLocation" name="otherLocation" class="hidden" placeholder="Lütfen belirtiniz">
+                </div>
+
+                <div class="form-group">
+                    <label for="attachment" data-lang="attachment">Olayınızı destekleyen kanıtları ekleyin (ekran görüntüleri, vb.).</label> <br><br>
+                    <input type="file" id="attachment" name="attachment" multiple>
+                </div>
+
+                <!-- İç denetim çalışanı bildirimi -->
+                <label for="auditYes" data-lang="auditYes">Bu bildirim bir İç Denetim çalışanı ile ilgili mi?</label><br>
+                <input type="radio" id="auditYes" name="auditEmployee" value="yes" data-lang="yes"> <span data-lang="yes">Evet</span>
+                <input type="radio" id="auditNo" name="auditEmployee" value="no" data-lang="no"> <span data-lang="no">Hayır</span><br>
+
+                <!-- Employee name input, hidden by default -->
+                <div id="employeeNameContainer" class="hidden">
+                    <label for="employeeName" data-lang="employeeName">Lütfen çalışanın adını belirtiniz:</label><br>
+                    <input type="text" id="employeeName" name="employeeName">
+                </div>
+
+                <div class="form-group">
+                    <label data-lang="introduce">Kendinizi tanıtmak ister misiniz?</label>
+                    <div>
+                        <input type="radio" id="introduceYes" name="introduce" value="yes" required>
+                        <label for="introduceYes" data-lang="introduceYes">Evet</label>
+                    
+                        <input type="radio" id="introduceNo" name="introduce" value="no" required>
+                        <label for="introduceNo" data-lang="introduceNo">Hayır</label>
+                    </div>
+                    <div id="anonymousWarning" class="hidden">
+                    <p style="color:red;"><i>Anonim kalmayı tercih ettiniz. Ancak, bildiriminizle ilgili ek sorularımız olursa, sizinle iletişim kuracak herhangi bir iletişim bilgisine sahip değiliz. Eğer bildiriminiz için ek bilgiye ihtiyaç duyulursa, sizinle iletişim kuramayacağız ve bildiriminiz düzgün bir şekilde değerlendirilemeyebilir. Kimliğinizi açığa çıkarmadan bir e-posta adresi sağlamanız sizin için faydalı olabilir. Bunu yapmak isterseniz, lütfen aşağıya e-posta adresinizi giriniz. Aksi halde size vereceğimiz bildirim numarası ile bildiriminizin durumunu sorgulayıp ilave bilgi ihtiyacı olup olmadığını kontrol ediniz.</i></p>
+                    <input type="email" id="contactEmail" name="contactEmail" placeholder="E-posta Adresiniz (isteğe bağlı)">
+                </div>
+                </div>
+
+                <div id="personalInfo" class="hidden">
+                    <div class="form-group">
+                        <label for="fullName" data-lang="fullName">Ad Soyad</label>
+                        <input type="text" id="fullName" name="fullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-lang="email">Email*</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gsm" data-lang="gsm">GSM</label>
+                        <input type="tel" id="gsm" name="gsm">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="relationship" data-lang="relationship">Şirketle olan ilişkiniz</label><br>
+                    <select id="relationship" name="relationship">
+                          <option value="" disabled selected data-lang="choose">Seçiniz</option>
+                        <option value="" data-lang="noDeclaration">Beyan etmek istemiyorum</option>
+                        <option value="currentEmployee" data-lang="currentEmployee">Mevcut Çalışan</option>
+                        <option value="formerEmployee" data-lang="formerEmployee">Eski Çalışan</option>
+                        <option value="supplier" data-lang="supplier">Tedarikçi</option>
+                        <option value="franchisee" data-lang="franchisee">Bayi Sahibi</option>
+                        <option value="contractor" data-lang="contractor">Yüklenici</option>
+                        <option value="subcontractor" data-lang="subcontractor">Taşeron</option>
+                        <option value="otherrelation" data-lang="otherrelation">Diğer</option>
+                    </select>
+                    <input type="text" id="otherrelationtext" name="otherrelationtext" class="hidden" placeholder="Lütfen belirtiniz">
+                </div>
+
+                <div class="form-group">
+                    <label id="securityQuestionLabel" for="securityQuestion" data-lang="securityQuestion">Gizli Soru (Bildirim durumu takibi için gereklidir)</label>
+                    <select id="securityQuestion" name="securityQuestion">
+                        <option value="" disabled selected data-lang="choose">Seçiniz</option>
+                        <option value="firstPet" data-lang="firstPet">İlk evcil hayvanınızın adı nedir?</option>
+                        <option value="motherMaiden" data-lang="motherMaiden">Annenizin kızlık soyadı nedir?</option>
+                        <option value="firstSchool" data-lang="firstSchool">İlkokulunuzun adı nedir?</option>
+                        <option value="favoriteTeacher" data-lang="favoriteTeacher">En sevdiğiniz öğretmen kimdir?</option>
+                        <option value="birthCity" data-lang="birthCity">Hangi şehirde doğdunuz?</option>
+                    </select>
+                    <input type="text" id="securityAnswer" name="securityAnswer" placeholder="Cevabınız">
+                    <p id="securityWarning" class="hidden" data-lang="securityWarning">Bu alan bildirim takibi yapabilmeniz için gereklidir. Bildirimi tamamlamak için zorunlu değildir ancak bu alan boşsa bildirim takibi yapamazsınız.</p>
+                </div>
+            </div>
+            
+            <button type="submit" data-lang="submit" id="submitBtn">Gönder</button>
+        </form>
+        
+        <div id="warning" class="hidden">
+            <p data-lang="warning">Şartlar ve Koşulları kabul etmeden devam edemezsiniz.</p>
+        </div>
+        
+        <div id="loading" class="hidden">
+            <img src="loading.gif" alt="Yükleniyor...">
+        </div>
+
+        <div id="successMessage" class="hidden" data-lang="successMessage">
+            Bildiriminiz başarıyla gönderildi. Teşekkürler! <br><br>
+            <button id="homeButton">Ana Sayfaya Git</button>
+        </div>
+    </div>
+
+    <div class="faq-container">
+        <h2 id="faqTitle" data-lang="faqTitle">Sıkça Sorulan Sorular</h2>
+        <button class="faq-question" id="q1" data-lang="q1">Getir Speak Up nedir?</button>
+        <div class="faq-answer" id="a1" data-lang="a1">Getir çalışanlarının gözlemledikleri veya maruz kaldıkları 'etik uygunsuzlukları' paylaşabilecekleri, endişelerini dile getirebilecekleri, 7/24 hizmet veren bir destek hattıdır. Gelen bildirimler aynı gün Getir Etik ve Uyum Yöneticisine raporlanır ve en kısa sürede konuya ilişkin inceleme başlatılır.</div>
+        <button class="faq-question" id="q2" data-lang="q2">Hangi konularda etik bildirimde bulunulur?</button>
+        <div class="faq-answer" id="a2" data-lang="a2">EGetir kültürüne, Getir etik değerlerine, profesyonel standartlara ve ilgili yasalara aykırı olduğunu düşündüğünüz her durumu bildirebilirsiniz. Bu kapsamda veri sızıntısı, rüşvet ve yolsuzluk, çıkar çatışması, gizli bilgi ihlali, uygunsuz gider bildirimi, kurum kaynaklarını kişisel çıkarlar için kullanma, ayrımcılık, mobbing, rekabete aykırı davranışlar, şirket etik kültürüne aykırılık gibi birçok başlıkta bildirimde bulunulması mümkündür.</div>
+        <button class="faq-question" id="q3" data-lang="q3">Bildirimde bulunurken ismimi açıklamak zorunda mıyım?</button>
+        <div class="faq-answer" id="a3" data-lang="a3">Getir Speak Up'a bir bildirimde bulunduğunuz zaman, iletişimi kolaylaştırması açısından kimliğinizi açıklamayı ya da kimliğinizi saklı tutmayı tercih edebilirsiniz. Kimliğinizi açıklamanız halinde incelemeyi yapacak olan Getir Etik ve Uyum Yöneticisi kimliğinizi saklı tutmak için her türlü önlemi alacaktır. Bildiriminizin değerlendirilmeye alınması bakımından kimliğinizi açıklayıp açıklamamanızın sürecin işleyişine herhangi bir olumsuz etkisi bulunmayacaktır. Bildirimde bulunan kişinin rızası olmaksızın, hiçbir şekilde kimlik bilgileri ya da kimliğini ortaya çıkarabilecek herhangi bir bilgi Getir veya 3. şahıslar ile paylaşılmaz.</div>
+        <button class="faq-question" id="q4" data-lang="q4">Bildirimde bulunduğum için bir zarar görür müyüm?</button>
+        <div class="faq-answer" id="a4" data-lang="a4">Getir, bir sorunun ortaya çıkarılması için katkıda bulunan Getirlilerin yardımına değer verir. Dürüst ve iyi niyetli bir şekilde bildirimde çalışanlara herhangi bir misilleme (ayrımcılık, hak kaybı, tehdit vb. eylemler) yapılamaz. Ancak bilerek yanlış/asılsız bir suçlamada bulunanlar sorumlu tutulacaktır.</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
