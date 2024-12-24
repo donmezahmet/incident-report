@@ -73,7 +73,8 @@
             <div class="form-group">
                 <label for="securityAnswer" data-lang="securityAnswer">Cevabınız</label>
                 <input type="text" id="securityAnswer" name="securityAnswer" required>
-                  <small style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;"> Bu alan büyük ve küçük harf duyarlıdır. Lütfen cevabınızı dikkatli bir şekilde giriniz.</small>
+         <small id="caseSensitiveMessage" style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;"> Bu alan büyük ve küçük harf duyarlıdır. Lütfen cevabınızı dikkatli bir şekilde giriniz.</small>
+
             </div>
 
             <button type="submit" data-lang="submitBtn">Sorgula</button>
@@ -108,6 +109,8 @@
         const resultMessage = document.getElementById('resultMessage');
         const ticketNumber = document.getElementById('ticketNumber').value;
         const ticketStatus = resultMessage.innerText.match(/\"(.*?)\"/);
+  document.getElementById('caseSensitiveMessage').innerText = translations[lang].caseSensitiveMessage;
+
         if (ticketStatus) {
             resultMessage.innerHTML = translations[lang].resultMessage
                 .replace('{ticketNumber}', ticketNumber)
@@ -115,50 +118,46 @@
         }
     }
 
-    const translations = {
-        en: {
-            selectLanguage: "Select Language",
-            queryTitle: "Query an Incident",
-            ticketNumber: "Ticket Number",
-            securityQuestion: "Security Question",
-            firstPet: "What was the name of your first pet?",
-            motherMaiden: "What is your mother's maiden name?",
-            firstSchool: "What was the name of your first school?",
-            favoriteTeacher: "Who was your favorite teacher?",
-            birthCity: "In which city were you born?",
-            securityAnswer: "Your Answer",
-            submitBtn: "Submit",
-            resultMessage: "Your ticket ({ticketNumber}) is currently in the {ticketStatus} status.",
-            resultError: "Sorry, there seems to be an error with the information you provided. Please check and try again.",
-            resultApiError: "An error occurred while querying the incident.",
-            ticketStatus: {
-                "To Do": "To Do",
-                "In Progress": "In Progress",
-                "Completed": "Completed"
-            }
-        },
-        tr: {
-            selectLanguage: "Dil Seçiniz",
-            queryTitle: "Bildirim Sorgulama",
-            ticketNumber: "Bildirim Numarası",
-            securityQuestion: "Gizli Soru",
-            firstPet: "İlk evcil hayvanınızın adı nedir?",
-            motherMaiden: "Annenizin kızlık soyadı nedir?",
-            firstSchool: "İlkokulunuzun adı nedir?",
-            favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
-            birthCity: "Hangi şehirde doğdunuz?",
-            securityAnswer: "Cevabınız",
-            submitBtn: "Sorgula",
-            resultMessage: "Bildiriminiz ({ticketNumber}) şu anda {ticketStatus} statüsündedir.",
-            resultError: "Üzgünüz, sağladığınız bilgilere dair bir hata oluştu. Lütfen kontrol edip tekrar deneyin.",
-            resultApiError: "Bildirim sorgulama sırasında bir hata oluştu.",
-            ticketStatus: {
-                "To Do": "İncelenmek Üzere Bekliyor",
-                "In Progress": "İnceleme Devam Ediyor",
-                "Completed": "İnceleme Tamamlandı"
-            }
+const translations = {
+    en: {
+        queryTitle: "Query an Incident",
+        ticketNumber: "Ticket Number",
+        securityQuestion: "Security Question",
+        firstPet: "What was the name of your first pet?",
+        motherMaiden: "What is your mother's maiden name?",
+        firstSchool: "What was the name of your first school?",
+        favoriteTeacher: "Who was your favorite teacher?",
+        birthCity: "In which city were you born?",
+        securityAnswer: "Your Answer",
+        submitBtn: "Submit",
+        caseSensitiveMessage: "This field is case-sensitive. Please enter your answer carefully.",
+        resultMessage: "Your ticket ({ticketNumber}) is currently in the {ticketStatus} status.",
+        ticketStatus: {
+            "To Do": "To Do",
+            "In Progress": "In Progress",
+            "Completed": "Completed"
         }
-    };
+    },
+    tr: {
+        queryTitle: "Bildirim Sorgulama",
+        ticketNumber: "Bildirim Numarası",
+        securityQuestion: "Gizli Soru",
+        firstPet: "İlk evcil hayvanınızın adı nedir?",
+        motherMaiden: "Annenizin kızlık soyadı nedir?",
+        firstSchool: "İlkokulunuzun adı nedir?",
+        favoriteTeacher: "En sevdiğiniz öğretmenin adı nedir?",
+        birthCity: "Hangi şehirde doğdunuz?",
+        securityAnswer: "Cevabınız",
+        submitBtn: "Sorgula",
+        caseSensitiveMessage: "Bu alan büyük ve küçük harf duyarlıdır. Lütfen cevabınızı dikkatli bir şekilde giriniz.",
+        resultMessage: "Bildiriminiz ({ticketNumber}) şu anda {ticketStatus} statüsündedir.",
+        ticketStatus: {
+            "To Do": "İncelenmek Üzere Bekliyor",
+            "In Progress": "İnceleme Devam Ediyor",
+            "Completed": "İnceleme Tamamlandı"
+        }
+    }
+};
 
     document.getElementById('queryForm').addEventListener('submit', function(event) {
         event.preventDefault();
