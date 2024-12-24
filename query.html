@@ -73,7 +73,7 @@
             <div class="form-group">
                 <label for="securityAnswer" data-lang="securityAnswer">Your Answer</label>
                 <input type="text" id="securityAnswer" name="securityAnswer" required>
-                    <small style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;"> This field is case-sensitive. Please enter your answer carefully.</small>
+                   <small id="caseSensitiveMessage" style="font-size: 12px; color: #6c757d; font-style: italic; display: block; margin-top: -6px; padding-left: 4px;">This field is case-sensitive. Please enter your answer carefully.</small>      
             </div>
 
             <button type="submit" data-lang="submitBtn">Submit</button>
@@ -101,6 +101,8 @@
         });
 
         // Adjust the flag opacity to indicate active language
+            document.getElementById('caseSensitiveMessage').innerText = translations[lang].caseSensitiveMessage;
+
         document.getElementById('trFlag').style.opacity = lang === 'tr' ? '1' : '0.5';
         document.getElementById('enFlag').style.opacity = lang === 'en' ? '1' : '0.5';
 
@@ -114,6 +116,7 @@
         if (resultMessage.innerText) {
             const ticketNumber = document.getElementById('ticketNumber').value;
             const ticketStatus = resultMessage.innerText.match(/\"(.*?)\"/);
+            document.getElementById('caseSensitiveMessage').innerText = translations[lang].caseSensitiveMessage;
             if (ticketStatus) {
                 resultMessage.innerHTML = translations[lang].resultMessage
                     .replace('{ticketNumber}', ticketNumber)
@@ -135,6 +138,7 @@
             birthCity: "In which city were you born?",
             securityAnswer: "Your Answer",
             submitBtn: "Submit",
+            caseSensitiveMessage: "This field is case-sensitive. Please enter your answer carefully.",
             resultMessage: "Your ticket ({ticketNumber}) is currently in the {ticketStatus} status.",
             resultError: "Sorry, there seems to be an error with the information you provided. Please check and try again.",
             resultApiError: "An error occurred while querying the incident.",
@@ -156,6 +160,7 @@
             birthCity: "Hangi şehirde doğdunuz?",
             securityAnswer: "Cevabınız",
             submitBtn: "Sorgula",
+            caseSensitiveMessage: "Bu alan büyük ve küçük harf duyarlıdır. Lütfen cevabınızı dikkatli bir şekilde giriniz.",
             resultMessage: "Bildiriminiz ({ticketNumber}) şu anda {ticketStatus} statüsündedir.",
             resultError: "Üzgünüz, sağladığınız bilgilere dair bir hata oluştu. Lütfen kontrol edip tekrar deneyin.",
             resultApiError: "Bildirim sorgulama sırasında bir hata oluştu.",
